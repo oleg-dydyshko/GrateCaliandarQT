@@ -30,6 +30,9 @@ private slots:
     void on_exit_clicked();
     void on_create_clicked();
     void replyFinished(QNetworkReply *reply);
+    void on_pushButton_clicked();
+    void dialogAccepted(QString *, QString *, QString *);
+
 private:
     Ui::MainWindow *ui;
     QThread *pMyThread;

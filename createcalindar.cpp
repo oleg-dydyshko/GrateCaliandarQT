@@ -13,7 +13,6 @@ CreateCalindar::CreateCalindar(int inyear, int outyear, bool copySiteProgram, bo
     CreateCalindar::inyear = inyear;
     CreateCalindar::outyear = outyear;
     CreateCalindar::copySiteProgram = copySiteProgram;
-    //CreateCalindar::copySite = copySite;
     CreateCalindar::beta = beta;
     CreateCalindar::relise = relise;
     CreateCalindar::devel = devel;

@@ -2,6 +2,8 @@
 #include "ui_mainwindow.h"
 #include <QJsonDocument>
 #include <QJsonObject>
+#include "settings.h"
+#include <QDir>
 
 int run = 0;
 int develSite = 0;
@@ -15,9 +17,47 @@ MainWindow::MainWindow(QWidget *parent)
     QNetworkAccessManager * manager = new QNetworkAccessManager(this);
     connect(manager, SIGNAL(finished(QNetworkReply *)), this, SLOT(replyFinished(QNetworkReply *)));
     manager->get(QNetworkRequest(QUrl("https://carkva-gazeta.by/updateMalitounikBGKC.json")));
-    QDate date = QDate::currentDate();
-    ui->yearEdit_1->setText(QString::number(date.addYears(-2).year()));
-    ui->yearEdit_2->setText(QString::number(date.addYears(1).year()));
+
+    QString dirName = QDir::homePath() + "/.malitounik-bgkc";
+    QDir dirs(dirName);
+    QString carkvaPatch;
+    QString malitounikPatch;
+    QString yearIn;
+    QString yearOut;
+    if (!dirs.exists()) {
+        Settings window;
+        window.setModal(true);
+        window.exec();
+        QDate date = QDate::currentDate();
+        carkvaPatch = "";
+        malitounikPatch = "";
+        yearIn = QString::number(date.addYears(-2).year());
+        yearOut = QString::number(date.addYears(1).year());
+    } else {
+        QByteArray array;
+        QString fileName = dirName + "/settings.json";
+        QFileInfo fileInfo(fileName);
+        QDir::setCurrent(fileInfo.path());
+        QFile file(fileName);
+        if (file.open(QIODevice::ReadOnly))
+        {
+            array = file.readAll();
+            file.close();
+        }
+        QJsonDocument document = QJsonDocument::fromJson(array);
+        QJsonObject result = document.object();
+        QJsonValue carkva = result.value("carkva");
+        QJsonValue malitounik = result.value("malitounik");
+        QJsonValue jsonYear = result.value("year");
+        carkvaPatch = carkva.toString();
+        malitounikPatch = malitounik.toString();
+        yearIn = jsonYear.toString();
+        int preYear = yearIn.toInt();
+        preYear += 3;
+        yearOut = QString::number(preYear);
+    }
+    ui->yearEdit_1->setText(yearIn);
+    ui->yearEdit_2->setText(yearOut);
     ui->exit->setVisible(false);
 }
 
@@ -84,6 +124,23 @@ void MainWindow::downloadSiteFinish() {
 
 void MainWindow::update(int *update) {
     ui->progressBar->setValue(*update);
+}
+
+void MainWindow::on_pushButton_clicked()
+{
+    Settings window;
+    window.setModal(true);
+    connect(&window, SIGNAL(myaccepted(QString *, QString *, QString *)), this, SLOT(dialogAccepted(QString *, QString *, QString *)));
+    window.exec();
+}
+
+void MainWindow::dialogAccepted(QString *carkva, QString *malitounik, QString *year) {
+    QString yearIn = *year;
+    int preYear = yearIn.toInt();
+    preYear += 3;
+    QString yearOut = QString::number(preYear);
+    ui->yearEdit_1->setText(yearIn);
+    ui->yearEdit_2->setText(yearOut);
 }
 
 void MainWindow::on_create_clicked()

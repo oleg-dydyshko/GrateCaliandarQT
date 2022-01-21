@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/image">
         <file>image/krest.png</file>
+        <file>image/settings.png</file>
     </qresource>
 </RCC>
