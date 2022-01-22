@@ -31,7 +31,7 @@ private slots:
     void on_create_clicked();
     void replyFinished(QNetworkReply *reply);
     void on_pushButton_clicked();
-    void dialogAccepted(QString *, QString *, QString *);
+    void dialogAccepted(QString *);
 
 private:
     Ui::MainWindow *ui;
@@ -39,5 +39,10 @@ private:
     QThread *pSiteThread;
     CreateCalindar *pCreateCalindar;
     downloadSite *pdownloadSite;
+    int run = 0;
+    int develSite = 0;
+    int reliseSite = 0;
+    QString carkvaPatch;
+    QString malitounikPatch;
 };
 #endif // MAINWINDOW_H

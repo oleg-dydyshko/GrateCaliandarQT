@@ -5,10 +5,6 @@
 #include "settings.h"
 #include <QDir>
 
-int run = 0;
-int develSite = 0;
-int reliseSite = 0;
-
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -20,17 +16,16 @@ MainWindow::MainWindow(QWidget *parent)
 
     QString dirName = QDir::homePath() + "/.malitounik-bgkc";
     QDir dirs(dirName);
-    QString carkvaPatch;
-    QString malitounikPatch;
     QString yearIn;
     QString yearOut;
     if (!dirs.exists()) {
         Settings window;
         window.setModal(true);
+        connect(&window, SIGNAL(myaccepted(QString *)), this, SLOT(dialogAccepted(QString *)));
         window.exec();
         QDate date = QDate::currentDate();
-        carkvaPatch = "";
-        malitounikPatch = "";
+        carkvaPatch = "/home/oleg/www/carkva";
+        malitounikPatch = "/home/oleg/AndroidStudioProjects/Malitounik";
         yearIn = QString::number(date.addYears(-2).year());
         yearOut = QString::number(date.addYears(1).year());
     } else {
@@ -75,8 +70,8 @@ void MainWindow::replyFinished(QNetworkReply *reply) {
         QJsonValue devel = result.value("devel");
         develSite = devel.toString().toInt();
         reliseSite = release.toString().toInt();
-        ui->lineEditBeta->setText(devel.toString());
-        ui->lineEditRelise->setText(release.toString());
+        ui->lineEditBeta->setValue(devel.toString().toInt());
+        ui->lineEditRelise->setValue(release.toString().toInt());
     }
     reply->deleteLater();
 }
@@ -130,11 +125,11 @@ void MainWindow::on_pushButton_clicked()
 {
     Settings window;
     window.setModal(true);
-    connect(&window, SIGNAL(myaccepted(QString *, QString *, QString *)), this, SLOT(dialogAccepted(QString *, QString *, QString *)));
+    connect(&window, SIGNAL(myaccepted(QString *)), this, SLOT(dialogAccepted(QString *)));
     window.exec();
 }
 
-void MainWindow::dialogAccepted(QString *carkva, QString *malitounik, QString *year) {
+void MainWindow::dialogAccepted(QString *year) {
     QString yearIn = *year;
     int preYear = yearIn.toInt();
     preYear += 3;

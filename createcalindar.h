@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QtNetwork/QNetworkAccessManager>
+#include <QJsonArray>
 
 class CreateCalindar: public QObject
 {
@@ -34,6 +35,13 @@ private:
     bool relise;
     QString devel;
     QString release;
+    QJsonArray ja;
+    int position = 0;
+    QString svitya[367][3];
+    QString sviatyia_new[366][4];
+    int YearG = 2020;
+    QString carkvaPatch;
+    QString malitounikPatch;
     QNetworkAccessManager *networkManager;
     void setViersionApp(bool relise);
     void getSviatyYear(int Year);

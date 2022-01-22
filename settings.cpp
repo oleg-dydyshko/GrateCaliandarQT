@@ -94,5 +94,5 @@ void Settings::on_buttonBox_accepted()
         jsonFile.write(QJsonDocument::fromVariant(vmap).toJson(QJsonDocument::Compact));
         jsonFile.close();   // Закрываем файл
     }
-    emit myaccepted(&lineEdit, &lineEdit_2, &year);
+    emit myaccepted(&year);
 }

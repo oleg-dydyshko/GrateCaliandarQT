@@ -1,6 +1,6 @@
 #include "createcalindar.h"
 #include <QJsonDocument>
-#include <QJsonArray>
+#include <QJsonObject>
 #include <QtNetwork/QNetworkReply>
 #include <QUrl>
 #include <QFile>
@@ -18,14 +18,32 @@ CreateCalindar::CreateCalindar(int inyear, int outyear, bool copySiteProgram, bo
     CreateCalindar::devel = devel;
     CreateCalindar::release = release;
 }
-QJsonArray ja;
-int position = 0;
-QString svitya[367][3];
-QString sviatyia_new[366][4];
-int YearG = 2019;
 
 void CreateCalindar::generate()
 {
+    QString dirName = QDir::homePath() + "/.malitounik-bgkc";
+    QDir dirs(dirName);
+    if (!dirs.exists()) {
+        carkvaPatch = "/home/oleg/www/carkva";
+        malitounikPatch = "/home/oleg/AndroidStudioProjects/Malitounik";
+    } else {
+        QByteArray array;
+        QString fileName = dirName + "/settings.json";
+        QFileInfo fileInfo(fileName);
+        QDir::setCurrent(fileInfo.path());
+        QFile file(fileName);
+        if (file.open(QIODevice::ReadOnly))
+        {
+            array = file.readAll();
+            file.close();
+        }
+        QJsonDocument document = QJsonDocument::fromJson(array);
+        QJsonObject result = document.object();
+        QJsonValue carkva = result.value("carkva");
+        QJsonValue malitounik = result.value("malitounik");
+        carkvaPatch = carkva.toString();
+        malitounikPatch = malitounik.toString();
+    }
     networkManager = new QNetworkAccessManager();
     if (CreateCalindar::beta) {
         CreateCalindar::setViersionApp(false);
@@ -1052,7 +1070,7 @@ void CreateCalindar::generateCaliandar()
         c2 = c2.addDays(1);
         emit update(&e);
     }
-        QString saveFileName = "/home/oleg/AndroidStudioProjects/Malitounik/malitounik-bgkc/src/main/res/raw/caliandar.json";
+        QString saveFileName = malitounikPatch +  "/malitounik-bgkc/src/main/res/raw/caliandar.json";
         QFileInfo fileInfo(saveFileName);   // С помощью QFileInfo
         QDir::setCurrent(fileInfo.path());  // установим текущую рабочую директорию, где будет файл, иначе может не заработать
         // Создаём объект файла и открываем его на запись
@@ -1116,35 +1134,13 @@ void CreateCalindar::onDownload(QNetworkReply *reply)
     }
     QByteArray read = reply->readAll();
         QString getFile = ja.at(position).toString();
+        getFile = getFile.replace("https://carkva-gazeta.by", "");
         int t1 = getFile.lastIndexOf("/");
-        QString filename = "/home/oleg/www/carkva" + getFile.mid(t1);
-        if (getFile.contains("/chytanne/piarliny.json"))
-            filename = "/home/oleg/www/carkva/chytanne" + getFile.mid(t1);
-        if (getFile.contains("/chytanne/sviatyja/"))
-            filename = "/home/oleg/www/carkva/chytanne/sviatyja" + getFile.mid(t1);
-        if (getFile.contains("/chytanne/Semucha/"))
-            filename = "/home/oleg/www/carkva/chytanne/Semucha" + getFile.mid(t1);
-        if (getFile.contains("/admin/pesny/"))
-            filename = "/home/oleg/www/carkva/admin/pesny" + getFile.mid(t1);
-        if (getFile.contains("/admin/parafii_bgkc/"))
-            filename = "/home/oleg/www/carkva/admin/parafii_bgkc" + getFile.mid(t1);
-        if (getFile.contains("/admin/prynagodnyia/"))
-            filename = "/home/oleg/www/carkva/admin/prynagodnyia" + getFile.mid(t1);
-        if (getFile.contains("/admin/bogashlugbovya/")) {
-            int t2 = getFile.indexOf("/admin/bogashlugbovya/");
-            filename = "/home/oleg/www/carkva/admin/bogashlugbovya" + getFile.mid(t2 + 21, t1 - (t2 + 21));
-            QDir qdir(filename);
-            if (!qdir.exists()) {
-                qdir.mkpath(filename);
-            }
-            filename = "/home/oleg/www/carkva/admin/bogashlugbovya" + getFile.mid(t2 + 21);
-        }
-        if (getFile.contains("/admin/piasochnica/"))
-            filename = "/home/oleg/www/carkva/admin/piasochnica" + getFile.mid(t1);
-        if (getFile.contains("/chytanne/icons/"))
-            filename = "/home/oleg/www/carkva/chytanne/icons" + getFile.mid(t1);
-        if (getFile.contains("/calendarsviatyia.txt")) {
-            filename = "/home/oleg/www/carkva" + getFile.mid(t1);
+        QString filename = carkvaPatch + getFile;
+        QString dir = carkvaPatch + getFile.mid(0, t1);
+        QDir qdir(dir);
+        if (!qdir.exists()) {
+            qdir.mkpath(dir);
         }
         if (getFile.contains("/admin/getFilesCaliandar.php?year=")) {
             int t2 = getFile.mid(t1).lastIndexOf("=");
@@ -1152,7 +1148,7 @@ void CreateCalindar::onDownload(QNetworkReply *reply)
             QJsonDocument document = QJsonDocument::fromJson(read);
             QJsonArray root = document.array();
             QByteArray stringV = root[0].toString().toUtf8();
-            filename = "/home/oleg/www/carkva/calendar-cytanne_" + yaer + ".php";
+            filename = carkvaPatch + "/calendar-cytanne_" + yaer + ".php";
             QFile file(filename);
             if (file.open(QIODevice::WriteOnly)) {
                 file.write(stringV);
@@ -1166,7 +1162,7 @@ void CreateCalindar::onDownload(QNetworkReply *reply)
             file.close();
         }
         if (getFile.contains("/admin/pesny")) {
-            QString filenameprogram = "/home/oleg/AndroidStudioProjects/Malitounik/malitounik-bgkc/src/main/res/raw" + getFile.mid(t1);
+            QString filenameprogram = malitounikPatch + "/malitounik-bgkc/src/main/res/raw" + getFile.mid(t1);
             QFile file(filenameprogram);
             if (file.open(QIODevice::WriteOnly)) {
                 file.write(read);
@@ -1174,7 +1170,7 @@ void CreateCalindar::onDownload(QNetworkReply *reply)
             file.close();
         }
         if (getFile.contains("/admin/parafii_bgkc/") || getFile.contains("/chytanne/Semucha/") || getFile.contains("/admin/prynagodnyia/") || getFile.contains("/admin/bogashlugbovya/")) {
-            QString filenameprogram = "/home/oleg/AndroidStudioProjects/Malitounik/resources/src/main/res/raw" + getFile.mid(t1);
+            QString filenameprogram = malitounikPatch + "/resources/src/main/res/raw" + getFile.mid(t1);
             QFile file(filenameprogram);
             if (file.open(QIODevice::WriteOnly)) {
                 file.write(read);
@@ -1194,7 +1190,7 @@ void CreateCalindar::onDownload(QNetworkReply *reply)
 
 void CreateCalindar::sviatyia(int Year) {
         QDate gregorianCalendar = QDate::currentDate();
-        QString saveFileName = "/home/oleg/www/carkva/calendarsviatyia.txt";
+        QString saveFileName = carkvaPatch + "/calendarsviatyia.txt";
         QFileInfo fileInfo(saveFileName);
         QDir::setCurrent(fileInfo.path());
         QFile file(saveFileName);
@@ -1244,13 +1240,13 @@ void CreateCalindar::sviatyia(int Year) {
         if (Year != YearG) {
             YearG = Year;
             QString sb = "";
-            QString saveFileName = "/home/oleg/www/carkva/calendar-cytanne_" + QString::number(Year) + ".php";
+            QString saveFileName = carkvaPatch + "/calendar-cytanne_" + QString::number(Year) + ".php";
             QFileInfo fileInfo(saveFileName);
             QDir::setCurrent(fileInfo.path());
             QFile file(saveFileName);
             if (!file.exists()) {
                 int calendar = QDate::currentDate().year();
-                saveFileName = "/home/oleg/www/carkva/calendar-cytanne_" + QString::number(calendar) + ".php";
+                saveFileName = carkvaPatch + "/calendar-cytanne_" + QString::number(calendar) + ".php";
             }
             if (file.open(QIODevice::ReadOnly))
             {
@@ -1900,7 +1896,7 @@ void CreateCalindar::sviatyia(int Year) {
             data.append("- тыя, што не распараджаюцца сабой у поўнай меры (напрыклад, тыя, што жывуць у чужых; зьнябожаныя; тыя, што жывуць з ахвяраваньня i г. д.)\n");
             data.append("Таксама бiскуп i парахi могуць звольнiць верніка ад посту дзеля нейкiх важкiх прычынаў. Спаведнiк можа гэта зрабiць у спавядальнi.");
 
-            QString saveFileName = "/home/oleg/AndroidStudioProjects/Malitounik/malitounik-bgkc/src/main/res/raw/pamiatka.html";
+            QString saveFileName = malitounikPatch + "/malitounik-bgkc/src/main/res/raw/pamiatka.html";
             QFileInfo fileInfo(saveFileName);   // С помощью QFileInfo
             QDir::setCurrent(fileInfo.path());  // установим текущую рабочую директорию, где будет файл, иначе может не заработать
             QFile file(saveFileName);

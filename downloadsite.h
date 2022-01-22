@@ -12,6 +12,8 @@ public:
 private:
     QNetworkAccessManager *networkManager;
     int position = 0;
+    QString carkvaPatch;
+    QString malitounikPatch;
 private slots:
     void dowloadSiteArray(QNetworkReply *reply);
     void dowloadSiteFile(QNetworkReply *reply);

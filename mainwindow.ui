@@ -102,38 +102,6 @@
      <bool>true</bool>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEditBeta">
-    <property name="geometry">
-     <rect>
-      <x>6</x>
-      <y>237</y>
-      <width>71</width>
-      <height>32</height>
-     </rect>
-    </property>
-    <property name="inputMethodHints">
-     <set>Qt::ImhNone</set>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="lineEditRelise">
-    <property name="geometry">
-     <rect>
-      <x>6</x>
-      <y>303</y>
-      <width>71</width>
-      <height>32</height>
-     </rect>
-    </property>
-    <property name="inputMethodHints">
-     <set>Qt::ImhNone</set>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
    <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
@@ -334,6 +302,44 @@
       <width>20</width>
       <height>20</height>
      </size>
+    </property>
+   </widget>
+   <widget class="QSpinBox" name="lineEditBeta">
+    <property name="geometry">
+     <rect>
+      <x>6</x>
+      <y>230</y>
+      <width>81</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="minimum">
+     <number>43900</number>
+    </property>
+    <property name="maximum">
+     <number>100000</number>
+    </property>
+    <property name="value">
+     <number>44000</number>
+    </property>
+   </widget>
+   <widget class="QSpinBox" name="lineEditRelise">
+    <property name="geometry">
+     <rect>
+      <x>6</x>
+      <y>300</y>
+      <width>81</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="minimum">
+     <number>43900</number>
+    </property>
+    <property name="maximum">
+     <number>100000</number>
+    </property>
+    <property name="value">
+     <number>44000</number>
     </property>
    </widget>
   </widget>

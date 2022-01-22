@@ -25,7 +25,7 @@ private slots:
 private:
     Ui::Settings *ui;
 signals:
-    void myaccepted(QString *, QString *, QString *);
+    void myaccepted(QString *);
 };
 
 #endif // SETTINGS_H
