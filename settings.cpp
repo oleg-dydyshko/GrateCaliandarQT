@@ -43,7 +43,7 @@ Settings::~Settings()
 
 void Settings::on_pushButton_clicked()
 {
-    QDir directory;
+    QDir directory(QDir::homePath());
     QString path = QFileDialog::getExistingDirectory (this, tr("Абярыце каталог"), directory.path());
     if (path.isNull() == false )
     {
@@ -54,7 +54,7 @@ void Settings::on_pushButton_clicked()
 
 void Settings::on_pushButton_2_clicked()
 {
-    QDir directory;
+    QDir directory(QDir::homePath());
     QString path = QFileDialog::getExistingDirectory (this, tr("Абярыце каталог"), directory.path());
     if (path.isNull() == false )
     {
