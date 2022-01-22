@@ -1237,7 +1237,7 @@ void CreateCalindar::sviatyia(int Year) {
     }
 
     void CreateCalindar::getSviatyYear(int Year) {
-        if (Year != YearG) {
+        if (Year != YearG || svitya[0][0] == "") {
             YearG = Year;
             QString sb = "";
             QString saveFileName = carkvaPatch + "/calendar-cytanne_" + QString::number(Year) + ".php";
