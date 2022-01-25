@@ -1111,9 +1111,6 @@ void CreateCalindar::onResult(QNetworkReply *reply)
 
         QJsonDocument document = QJsonDocument::fromJson(reply->readAll());
             ja = document.array();
-            ja.append("https://carkva-gazeta.by/calendarsviatyia.txt");
-            ja.append("https://carkva-gazeta.by/opisanie_sviat.json");
-            ja.append("https://carkva-gazeta.by/chytanne/piarliny.json");
             for (int i = CreateCalindar::inyear; i <= CreateCalindar::outyear; i++) {
                 ja.append("https://carkva-gazeta.by/admin/getFilesCaliandar.php?year=" + QString::number(i));
             }
