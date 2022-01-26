@@ -20,11 +20,11 @@ public:
     ~MainWindow();
 
 private slots:
-    void getSize(int *, QString *);
+    void getSize(int *, QString *, QString *);
     void update(int *);
     void finish();
     void finishAll();
-    void downloadSiteStart(int *);
+    void downloadSiteStart(int *, QString *);
     void downloadSiteUpdate(int *);
     void downloadSiteFinish();
     void on_exit_clicked();

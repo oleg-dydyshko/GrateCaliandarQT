@@ -57,7 +57,7 @@ void CreateCalindar::generate()
     }
     if (CreateCalindar::copySiteProgram) {
         connect(networkManager, &QNetworkAccessManager::finished, this, &CreateCalindar::onResult);
-        networkManager->get(QNetworkRequest(QUrl("https://carkva-gazeta.by/admin/getFiles.php")));
+        networkManager->get(QNetworkRequest(QUrl("https://carkva-gazeta.by/admin/getFiles.php?yearIn=" + QString::number(CreateCalindar::inyear) + "&yearOut=" + QString::number(CreateCalindar::outyear))));
     } else {
         CreateCalindar::generateCaliandar();
     }
@@ -76,7 +76,8 @@ void CreateCalindar::generateCaliandar()
     int munAdapter = 0;
     int mun = c2.month();
     QString labal = "Ствараем каляндар:";
-    emit getSize(&dayyear, &labal);
+    QString download = "-1";
+    emit getSize(&dayyear, &labal, &download);
     for (int e = 1; e <= dayyear; e++) {
         QJsonArray arrayList;
         QString postBild = "0";
@@ -1108,18 +1109,22 @@ void CreateCalindar::onResult(QNetworkReply *reply)
 {
     if(!reply->error()){
         position = 0;
-
+        disconnect(networkManager, &QNetworkAccessManager::finished, this, &CreateCalindar::onResult);
         QJsonDocument document = QJsonDocument::fromJson(reply->readAll());
             ja = document.array();
-            for (int i = CreateCalindar::inyear; i <= CreateCalindar::outyear; i++) {
-                ja.append("https://carkva-gazeta.by/admin/getFilesCaliandar.php?year=" + QString::number(i));
-            }
-            int size = ja.size() - 1;
             QString labal = "Запамповываем файлы з сайта Царквы:";
-            emit getSize(&size, &labal);
-            disconnect(networkManager, &QNetworkAccessManager::finished, this, &CreateCalindar::onResult);
-            connect(networkManager, &QNetworkAccessManager::finished, this, &CreateCalindar::onDownload);
-            networkManager->get(QNetworkRequest(QUrl(ja.at(position).toString())));
+            int size = ja.size() - 1;
+            QString sizeDownload = QString::number(ja.size());
+            if (size == -1) {
+                size = 1;
+                emit getSize(&size, &labal, &sizeDownload);
+                emit update(&size);
+                CreateCalindar::generateCaliandar();
+            } else {
+                emit getSize(&size, &labal, &sizeDownload);
+                connect(networkManager, &QNetworkAccessManager::finished, this, &CreateCalindar::onDownload);
+                networkManager->get(QNetworkRequest(QUrl(ja.at(position).toString())));
+            }
     }
     reply->deleteLater();
 }

@@ -20,7 +20,7 @@ private slots:
 public slots:
     void download();
 signals:
-    void downloadSiteStart(int *);
+    void downloadSiteStart(int *, QString *);
     void downloadSiteUpdate(int *);
     void downloadSiteFinish();
 };

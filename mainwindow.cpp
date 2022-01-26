@@ -81,12 +81,15 @@ void MainWindow::on_exit_clicked()
     QApplication::quit();
 }
 
-void MainWindow::getSize(int *size, QString *label)
+void MainWindow::getSize(int *size, QString *label, QString *download)
 {
     QString utflabel = *label;
     ui->progressBar->setMaximum(*size);
     ui->progressBar->setValue(0);
     ui->label_4->setText(utflabel.toUtf8());
+    QString down = *download;
+    if (!down.toUtf8().contains("-1"))
+        ui->label_7->setText("Будзе запампована: " + down.toUtf8());
 }
 
 void MainWindow::finish() {
@@ -103,9 +106,11 @@ void MainWindow::finishAll() {
     }
 }
 
-void MainWindow::downloadSiteStart(int *size) {
+void MainWindow::downloadSiteStart(int *size, QString *download) {
     ui->progressBar_2->setMaximum(*size);
     ui->progressBar_2->setValue(0);
+    QString down = *download;
+    ui->label_8->setText("Будзе запампована: " + down.toUtf8());
 }
 
 void MainWindow::downloadSiteUpdate(int *update) {
@@ -152,7 +157,7 @@ void MainWindow::on_create_clicked()
         pMyThread = new QThread;
         pCreateCalindar = new CreateCalindar(ui->yearEdit_1->text().toInt(), ui->yearEdit_2->text().toInt(), ui->checkBox_1->isChecked(), checkDevel, checkRelise, ui->lineEditBeta->text(), ui->lineEditRelise->text());
         pCreateCalindar->moveToThread(pMyThread);
-        connect(pCreateCalindar, SIGNAL(getSize(int *, QString *)), this, SLOT(getSize(int *, QString *)));
+        connect(pCreateCalindar, SIGNAL(getSize(int *, QString *, QString *)), this, SLOT(getSize(int *, QString *, QString *)));
         connect(pCreateCalindar, SIGNAL(update(int *)), this, SLOT(update(int *)));
         connect(pCreateCalindar, SIGNAL(finished()), this, SLOT(finish()));
         connect(pMyThread, SIGNAL(started()), pCreateCalindar, SLOT(generate()));
@@ -161,7 +166,7 @@ void MainWindow::on_create_clicked()
             pSiteThread = new QThread;
             pdownloadSite = new downloadSite();
             pdownloadSite->moveToThread(pSiteThread);
-            connect(pdownloadSite, SIGNAL(downloadSiteStart(int *)), this, SLOT(downloadSiteStart(int *)));
+            connect(pdownloadSite, SIGNAL(downloadSiteStart(int *, QString *)), this, SLOT(downloadSiteStart(int *, QString *)));
             connect(pdownloadSite, SIGNAL(downloadSiteUpdate(int *)), this, SLOT(downloadSiteUpdate(int *)));
             connect(pdownloadSite, SIGNAL(downloadSiteFinish()), this, SLOT(downloadSiteFinish()));
             connect(pSiteThread, SIGNAL(started()), pdownloadSite, SLOT(download()));
