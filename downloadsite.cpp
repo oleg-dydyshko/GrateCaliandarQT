@@ -71,9 +71,9 @@ void downloadSite::dowloadSiteArray(QNetworkReply *reply) {
                 downloadFiles.append(result.at(i).toString());
             }
         }
-        int size = downloadFiles.size() - 1;
-        QString download = QString::number(downloadFiles.size());
-        emit downloadSiteStart(&size, &download);
+        downloadFilesSize = downloadFiles.size() - 1;
+        emit downloadSiteStart(&downloadFilesSize);
+        downloadSite::position = 0;
         networkManager->get(QNetworkRequest(QUrl(downloadFiles.at(downloadSite::position).toString())));
     }
     reply->deleteLater();

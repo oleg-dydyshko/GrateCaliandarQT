@@ -24,7 +24,7 @@ private slots:
     void update(int *);
     void finish();
     void finishAll();
-    void downloadSiteStart(int *, QString *);
+    void downloadSiteStart(int *);
     void downloadSiteUpdate(int *);
     void downloadSiteFinish();
     void on_exit_clicked();

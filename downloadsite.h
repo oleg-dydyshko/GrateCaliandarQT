@@ -14,13 +14,14 @@ private:
     int position = 0;
     QString carkvaPatch;
     QString malitounikPatch;
+    int downloadFilesSize;
 private slots:
     void dowloadSiteArray(QNetworkReply *reply);
     void dowloadSiteFile(QNetworkReply *reply);
 public slots:
     void download();
 signals:
-    void downloadSiteStart(int *, QString *);
+    void downloadSiteStart(int *);
     void downloadSiteUpdate(int *);
     void downloadSiteFinish();
 };

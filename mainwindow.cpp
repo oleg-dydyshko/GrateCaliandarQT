@@ -106,11 +106,11 @@ void MainWindow::finishAll() {
     }
 }
 
-void MainWindow::downloadSiteStart(int *size, QString *download) {
-    ui->progressBar_2->setMaximum(*size);
+void MainWindow::downloadSiteStart(int *sizeD) {
+    ui->progressBar_2->setMaximum(*sizeD);
     ui->progressBar_2->setValue(0);
-    QString down = *download;
-    ui->label_8->setText("Будзе запампована: " + down.toUtf8());
+    QString down = QString::number((*sizeD) + 1);
+    ui->label_8->setText("Будзе запампована: " + down);
 }
 
 void MainWindow::downloadSiteUpdate(int *update) {
@@ -166,7 +166,7 @@ void MainWindow::on_create_clicked()
             pSiteThread = new QThread;
             pdownloadSite = new downloadSite();
             pdownloadSite->moveToThread(pSiteThread);
-            connect(pdownloadSite, SIGNAL(downloadSiteStart(int *, QString *)), this, SLOT(downloadSiteStart(int *, QString *)));
+            connect(pdownloadSite, SIGNAL(downloadSiteStart(int *)), this, SLOT(downloadSiteStart(int *)));
             connect(pdownloadSite, SIGNAL(downloadSiteUpdate(int *)), this, SLOT(downloadSiteUpdate(int *)));
             connect(pdownloadSite, SIGNAL(downloadSiteFinish()), this, SLOT(downloadSiteFinish()));
             connect(pSiteThread, SIGNAL(started()), pdownloadSite, SLOT(download()));
