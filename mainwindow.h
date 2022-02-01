@@ -29,9 +29,10 @@ private slots:
     void downloadSiteFinish();
     void on_exit_clicked();
     void on_create_clicked();
-    void replyFinished(QNetworkReply *reply);
+    void replyFinished(QNetworkReply *);
     void on_pushButton_clicked();
     void dialogAccepted(QString *);
+    void downloadSiteFilesList(QNetworkReply *);
 
 private:
     Ui::MainWindow *ui;

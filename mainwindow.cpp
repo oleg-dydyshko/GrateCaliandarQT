@@ -54,11 +54,23 @@ MainWindow::MainWindow(QWidget *parent)
     ui->yearEdit_1->setText(yearIn);
     ui->yearEdit_2->setText(yearOut);
     ui->exit->setVisible(false);
+    connect(manager, &QNetworkAccessManager::finished, this, &MainWindow::downloadSiteFilesList);
+    manager->get(QNetworkRequest(QUrl("https://carkva-gazeta.by/admin/getFiles.php?yearIn=" + yearIn + "&yearOut=" + yearOut)));
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::downloadSiteFilesList(QNetworkReply *reply) {
+    if(!reply->error()){
+        QJsonDocument document = QJsonDocument::fromJson(reply->readAll());
+        QJsonArray ja = document.array();
+        QString sizeDownload = QString::number(ja.size());
+        ui->label_7->setText("Будзе запампована: " + sizeDownload.toUtf8());
+    }
+    reply->deleteLater();
 }
 
 void MainWindow::replyFinished(QNetworkReply *reply) {
