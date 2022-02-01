@@ -20,7 +20,7 @@ public:
     ~MainWindow();
 
 private slots:
-    void getSize(int *, QString *, QString *);
+    void getSize(int *, QString *);
     void update(int *);
     void finish();
     void finishAll();
@@ -33,6 +33,7 @@ private slots:
     void on_pushButton_clicked();
     void dialogAccepted(QString *);
     void downloadSiteFilesList(QNetworkReply *);
+    void downloadSiteFilesListAll(QNetworkReply *);
 
 private:
     Ui::MainWindow *ui;

@@ -4,6 +4,7 @@
 #include <QJsonObject>
 #include "settings.h"
 #include <QDir>
+#include <QUrlQuery>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -56,11 +57,45 @@ MainWindow::MainWindow(QWidget *parent)
     ui->exit->setVisible(false);
     connect(manager, &QNetworkAccessManager::finished, this, &MainWindow::downloadSiteFilesList);
     manager->get(QNetworkRequest(QUrl("https://carkva-gazeta.by/admin/getFiles.php?yearIn=" + yearIn + "&yearOut=" + yearOut)));
+    QNetworkAccessManager * networkManager = new QNetworkAccessManager(this);
+    QUrl url("https://carkva-gazeta.by/admin/backup.php");
+    QNetworkRequest request(url);
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
+    QUrlQuery params;
+    params.addQueryItem("saveProgram", "1");
+    connect(networkManager, SIGNAL(finished(QNetworkReply *)), this, SLOT(downloadSiteFilesListAll(QNetworkReply *)));
+    networkManager->post(request, params.query().toUtf8());
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::downloadSiteFilesListAll(QNetworkReply *reply) {
+    if(!reply->error()){
+        QJsonArray downloadFiles;
+        QByteArray array = reply->readAll();
+        QJsonDocument document = QJsonDocument::fromJson(array);
+        QJsonArray result = document.array();
+        for (int i = 0; i < result.size(); i++) {
+            QString getFile = result.at(i).toString();
+            QString path = getFile.replace("https://carkva-gazeta.by", carkvaPatch);
+            int t1 = path.lastIndexOf("/");
+            QString dir = carkvaPatch + getFile.mid(0, t1);
+            QDir qdir(dir);
+            if (!qdir.exists()) {
+                qdir.mkpath(dir);
+            }
+            QFile file(path);
+            if (!file.exists() || path.contains(".sql") || path.contains(".xml")) {
+                downloadFiles.append(result.at(i).toString());
+            }
+        }
+        QString sizeDownload = QString::number(downloadFiles.size());
+        ui->label_8->setText("Будзе запампована: " + sizeDownload.toUtf8());
+    }
+    reply->deleteLater();
 }
 
 void MainWindow::downloadSiteFilesList(QNetworkReply *reply) {
@@ -93,15 +128,12 @@ void MainWindow::on_exit_clicked()
     QApplication::quit();
 }
 
-void MainWindow::getSize(int *size, QString *label, QString *download)
+void MainWindow::getSize(int *size, QString *label)
 {
     QString utflabel = *label;
     ui->progressBar->setMaximum(*size);
     ui->progressBar->setValue(0);
     ui->label_4->setText(utflabel.toUtf8());
-    QString down = *download;
-    if (!down.toUtf8().contains("-1"))
-        ui->label_7->setText("Будзе запампована: " + down.toUtf8());
 }
 
 void MainWindow::finish() {
@@ -121,8 +153,6 @@ void MainWindow::finishAll() {
 void MainWindow::downloadSiteStart(int *sizeD) {
     ui->progressBar_2->setMaximum(*sizeD);
     ui->progressBar_2->setValue(0);
-    QString down = QString::number((*sizeD) + 1);
-    ui->label_8->setText("Будзе запампована: " + down);
 }
 
 void MainWindow::downloadSiteUpdate(int *update) {
@@ -169,7 +199,7 @@ void MainWindow::on_create_clicked()
         pMyThread = new QThread;
         pCreateCalindar = new CreateCalindar(ui->yearEdit_1->text().toInt(), ui->yearEdit_2->text().toInt(), ui->checkBox_1->isChecked(), checkDevel, checkRelise, ui->lineEditBeta->text(), ui->lineEditRelise->text());
         pCreateCalindar->moveToThread(pMyThread);
-        connect(pCreateCalindar, SIGNAL(getSize(int *, QString *, QString *)), this, SLOT(getSize(int *, QString *, QString *)));
+        connect(pCreateCalindar, SIGNAL(getSize(int *, QString *)), this, SLOT(getSize(int *, QString *)));
         connect(pCreateCalindar, SIGNAL(update(int *)), this, SLOT(update(int *)));
         connect(pCreateCalindar, SIGNAL(finished()), this, SLOT(finish()));
         connect(pMyThread, SIGNAL(started()), pCreateCalindar, SLOT(generate()));

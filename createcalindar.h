@@ -65,7 +65,7 @@ private slots:
 signals:
     void finished();
     void update(int *);
-    void getSize(int *, QString *, QString *);
+    void getSize(int *, QString *);
 };
 
 #endif // CREATECALINDAR_H

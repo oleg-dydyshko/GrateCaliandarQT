@@ -76,8 +76,7 @@ void CreateCalindar::generateCaliandar()
     int munAdapter = 0;
     int mun = c2.month();
     QString labal = "Ствараем каляндар:";
-    QString download = "-1";
-    emit getSize(&dayyear, &labal, &download);
+    emit getSize(&dayyear, &labal);
     for (int e = 1; e <= dayyear; e++) {
         QJsonArray arrayList;
         QString postBild = "0";
@@ -1114,14 +1113,13 @@ void CreateCalindar::onResult(QNetworkReply *reply)
             ja = document.array();
             QString labal = "Запамповываем файлы з сайта Царквы:";
             int size = ja.size() - 1;
-            QString sizeDownload = QString::number(ja.size());
             if (size == -1) {
                 size = 1;
-                emit getSize(&size, &labal, &sizeDownload);
+                emit getSize(&size, &labal);
                 emit update(&size);
                 CreateCalindar::generateCaliandar();
             } else {
-                emit getSize(&size, &labal, &sizeDownload);
+                emit getSize(&size, &labal);
                 connect(networkManager, &QNetworkAccessManager::finished, this, &CreateCalindar::onDownload);
                 networkManager->get(QNetworkRequest(QUrl(ja.at(position).toString())));
             }
