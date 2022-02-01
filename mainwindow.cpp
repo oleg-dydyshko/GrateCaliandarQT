@@ -55,8 +55,9 @@ MainWindow::MainWindow(QWidget *parent)
     ui->yearEdit_1->setText(yearIn);
     ui->yearEdit_2->setText(yearOut);
     ui->exit->setVisible(false);
-    connect(manager, &QNetworkAccessManager::finished, this, &MainWindow::downloadSiteFilesList);
-    manager->get(QNetworkRequest(QUrl("https://carkva-gazeta.by/admin/getFiles.php?yearIn=" + yearIn + "&yearOut=" + yearOut)));
+    QNetworkAccessManager * network = new QNetworkAccessManager(this);
+    connect(network, &QNetworkAccessManager::finished, this, &MainWindow::downloadSiteFilesList);
+    network->get(QNetworkRequest(QUrl("https://carkva-gazeta.by/admin/getFiles.php?yearIn=" + yearIn + "&yearOut=" + yearOut)));
     QNetworkAccessManager * networkManager = new QNetworkAccessManager(this);
     QUrl url("https://carkva-gazeta.by/admin/backup.php");
     QNetworkRequest request(url);
