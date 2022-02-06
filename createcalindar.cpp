@@ -75,7 +75,7 @@ void CreateCalindar::generateCaliandar()
     int niadzeliaAdapter = 0;
     int munAdapter = 0;
     int mun = c2.month();
-    QString labal = "Ствараем каляндар:";
+    labal = "Ствараем каляндар:";
     emit getSize(&dayyear, &labal);
     for (int e = 1; e <= dayyear; e++) {
         QJsonArray arrayList;
@@ -1110,10 +1110,27 @@ void CreateCalindar::onResult(QNetworkReply *reply)
         position = 0;
         disconnect(networkManager, &QNetworkAccessManager::finished, this, &CreateCalindar::onResult);
         QJsonDocument document = QJsonDocument::fromJson(reply->readAll());
-            ja = document.array();
-            QString labal = "Запамповываем файлы з сайта Царквы:";
-            int size = ja.size() - 1;
-            if (size == -1) {
+            QJsonArray download = document.array();
+            labal = "Запамповываем файлы з сайта Царквы:";
+            for (int i = 0; i < download.size();i++) {
+                QJsonValue val = download.at(i);
+                QJsonArray arr = val.toArray();
+                QString filePath = arr[0].toString();
+                QString path = arr[0].toString().replace("https://carkva-gazeta.by", carkvaPatch);
+                if (path.contains("admin/getFilesCaliandar.php?year=")) {
+                    int t1 = path.lastIndexOf("=");
+                    QString year = path.mid(t1 + 1);
+                    path = carkvaPatch + "/calendar-cytanne_" + year + ".php";
+                }
+                QFileInfo info(path);
+                int mFileModifi = info.lastModified().toSecsSinceEpoch();
+                int mFileModifiSite = arr[1].toInt();
+                if (mFileModifi < mFileModifiSite) {
+                    ja.append(filePath);
+                }
+            }
+            size = ja.size();
+            if (size == 0) {
                 size = 1;
                 emit getSize(&size, &labal);
                 emit update(&size);

@@ -33,6 +33,8 @@ private:
     bool copySiteProgram;
     bool beta;
     bool relise;
+    int size;
+    QString labal;
     QString devel;
     QString release;
     QJsonArray ja;

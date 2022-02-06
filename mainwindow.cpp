@@ -80,17 +80,21 @@ void MainWindow::downloadSiteFilesListAll(QNetworkReply *reply) {
         QJsonDocument document = QJsonDocument::fromJson(array);
         QJsonArray result = document.array();
         for (int i = 0; i < result.size(); i++) {
-            QString getFile = result.at(i).toString();
-            QString path = getFile.replace("https://carkva-gazeta.by", carkvaPatch);
+            QJsonValue val = result.at(i);
+            QJsonArray arr = val.toArray();
+            QString getFile = arr.at(0).toString();
+            QString path = arr.at(0).toString().replace("https://carkva-gazeta.by", carkvaPatch);
             int t1 = path.lastIndexOf("/");
-            QString dir = carkvaPatch + getFile.mid(0, t1);
+            QString dir = carkvaPatch + path.mid(0, t1);
             QDir qdir(dir);
             if (!qdir.exists()) {
                 qdir.mkpath(dir);
             }
-            QFile file(path);
-            if (!file.exists() || path.contains(".sql") || path.contains(".xml")) {
-                downloadFiles.append(result.at(i).toString());
+            QFileInfo info(path);
+            int mFileModifi = info.lastModified().toSecsSinceEpoch();
+            int mFileModifiSite = arr[1].toInt();
+            if (mFileModifi < mFileModifiSite) {
+                downloadFiles.append(val);
             }
         }
         QString sizeDownload = QString::number(downloadFiles.size());
@@ -100,11 +104,29 @@ void MainWindow::downloadSiteFilesListAll(QNetworkReply *reply) {
 }
 
 void MainWindow::downloadSiteFilesList(QNetworkReply *reply) {
-    if(!reply->error()){
+    if(!reply->error()) {
+        QJsonArray download;
         QJsonDocument document = QJsonDocument::fromJson(reply->readAll());
         QJsonArray ja = document.array();
-        QString sizeDownload = QString::number(ja.size());
-        ui->label_7->setText("Будзе запампована: " + sizeDownload.toUtf8());
+        for (int i = 0; i < ja.size();i++) {
+            QJsonValue val = ja.at(i);
+            QJsonArray arr = val.toArray();
+            QString filePath = arr[0].toString();
+            QString path = arr[0].toString().replace("https://carkva-gazeta.by", carkvaPatch);
+            if (path.contains("admin/getFilesCaliandar.php?year=")) {
+                int t1 = path.lastIndexOf("=");
+                QString year = path.mid(t1 + 1);
+                path = carkvaPatch + "/calendar-cytanne_" + year + ".php";
+            }
+            QFileInfo info(path);
+            int mFileModifi = info.lastModified().toSecsSinceEpoch();
+            int mFileModifiSite = arr[1].toInt();
+            if (mFileModifi < mFileModifiSite) {
+                download.append(val);
+            }
+        }
+        QString sizeDownload = QString::number(download.size());
+        ui->label_7->setText("Будзе запампована: " + sizeDownload);
     }
     reply->deleteLater();
 }
@@ -148,6 +170,8 @@ void MainWindow::finishAll() {
         run = 0;
         ui->create->setVisible(true);
         ui->exit->setVisible(true);
+        ui->label_7->setText("Будзе запампована: 0");
+        ui->label_8->setText("Будзе запампована: 3");
     }
 }
 

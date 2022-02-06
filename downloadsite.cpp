@@ -58,17 +58,24 @@ void downloadSite::dowloadSiteArray(QNetworkReply *reply) {
         disconnect(networkManager, SIGNAL(finished(QNetworkReply *)), this, SLOT(dowloadSiteArray(QNetworkReply *)));
         connect(networkManager, SIGNAL(finished(QNetworkReply *)), this, SLOT(dowloadSiteFile(QNetworkReply *)));
         for (int i = 0; i < result.size(); i++) {
-            QString getFile = result.at(i).toString();
-            QString path = getFile.replace("https://carkva-gazeta.by", carkvaPatch);
+            QJsonValue val = result.at(i);
+            QJsonArray arr = val.toArray();
+            QString getFile = arr.at(0).toString();
+            QString path = arr.at(0).toString().replace("https://carkva-gazeta.by", carkvaPatch);
             int t1 = path.lastIndexOf("/");
             QString dir = carkvaPatch + getFile.mid(0, t1);
             QDir qdir(dir);
             if (!qdir.exists()) {
                 qdir.mkpath(dir);
             }
-            QFile file(path);
-            if (!file.exists() || path.contains(".sql") || path.contains(".xml")) {
-                downloadFiles.append(result.at(i).toString());
+            QFileInfo info(path);
+            int mFileModifi = info.lastModified().toSecsSinceEpoch();
+            int mFileModifiSite = arr[1].toInt();
+            if (mFileModifi < mFileModifiSite) {
+            //QFile file(path);
+            //if (!file.exists() || path.contains(".sql") || path.contains(".xml")) {
+                downloadFiles.append(getFile);
+            //}
             }
         }
         downloadFilesSize = downloadFiles.size() - 1;
