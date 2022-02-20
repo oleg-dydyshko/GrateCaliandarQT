@@ -10,6 +10,7 @@ CONFIG += c++11
 
 SOURCES += \
     createcalindar.cpp \
+    downloadlist.cpp \
     downloadsite.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -17,11 +18,13 @@ SOURCES += \
 
 HEADERS += \
     createcalindar.h \
+    downloadlist.h \
     downloadsite.h \
     mainwindow.h \
     settings.h
 
 FORMS += \
+    downloadlist.ui \
     mainwindow.ui \
     settings.ui
 

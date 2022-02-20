@@ -3,6 +3,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include "settings.h"
+#include "downloadlist.h"
 #include <QDir>
 #include <QUrlQuery>
 
@@ -75,7 +76,6 @@ MainWindow::~MainWindow()
 
 void MainWindow::downloadSiteFilesListAll(QNetworkReply *reply) {
     if(!reply->error()){
-        QJsonArray downloadFiles;
         QByteArray array = reply->readAll();
         QJsonDocument document = QJsonDocument::fromJson(array);
         QJsonArray result = document.array();
@@ -94,10 +94,10 @@ void MainWindow::downloadSiteFilesListAll(QNetworkReply *reply) {
             int mFileModifi = info.lastModified().toSecsSinceEpoch();
             int mFileModifiSite = arr[1].toInt();
             if (mFileModifi < mFileModifiSite) {
-                downloadFiles.append(val);
+                MainWindow::downloadFiles.append(val[0].toString().replace("https://carkva-gazeta.by", ""));
             }
         }
-        QString sizeDownload = QString::number(downloadFiles.size());
+        QString sizeDownload = QString::number(MainWindow::downloadFiles.size());
         ui->label_8->setText("Будзе запампована: " + sizeDownload.toUtf8());
     }
     reply->deleteLater();
@@ -105,7 +105,6 @@ void MainWindow::downloadSiteFilesListAll(QNetworkReply *reply) {
 
 void MainWindow::downloadSiteFilesList(QNetworkReply *reply) {
     if(!reply->error()) {
-        QJsonArray download;
         QJsonDocument document = QJsonDocument::fromJson(reply->readAll());
         QJsonArray ja = document.array();
         for (int i = 0; i < ja.size();i++) {
@@ -122,10 +121,10 @@ void MainWindow::downloadSiteFilesList(QNetworkReply *reply) {
             int mFileModifi = info.lastModified().toSecsSinceEpoch();
             int mFileModifiSite = arr[1].toInt();
             if (mFileModifi < mFileModifiSite) {
-                download.append(val);
+                MainWindow::download.append(val[0].toString().replace("https://carkva-gazeta.by", ""));
             }
         }
-        QString sizeDownload = QString::number(download.size());
+        QString sizeDownload = QString::number(MainWindow::download.size());
         ui->label_7->setText("Будзе запампована: " + sizeDownload);
     }
     reply->deleteLater();
@@ -198,6 +197,22 @@ void MainWindow::on_pushButton_clicked()
     Settings window;
     window.setModal(true);
     connect(&window, SIGNAL(myaccepted(QString *)), this, SLOT(dialogAccepted(QString *)));
+    window.exec();
+}
+
+void MainWindow::on_pushButton_2_clicked()
+{
+    DownloadList window;
+    window.setModal(true);
+    window.setDownloadList(MainWindow::download);
+    window.exec();
+}
+
+void MainWindow::on_pushButton_3_clicked()
+{
+    DownloadList window;
+    window.setModal(true);
+    window.setDownloadList(MainWindow::downloadFiles);
     window.exec();
 }
 

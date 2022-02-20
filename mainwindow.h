@@ -31,6 +31,8 @@ private slots:
     void on_create_clicked();
     void replyFinished(QNetworkReply *);
     void on_pushButton_clicked();
+    void on_pushButton_2_clicked();
+    void on_pushButton_3_clicked();
     void dialogAccepted(QString *);
     void downloadSiteFilesList(QNetworkReply *);
     void downloadSiteFilesListAll(QNetworkReply *);
@@ -46,5 +48,7 @@ private:
     int reliseSite = 0;
     QString carkvaPatch;
     QString malitounikPatch;
+    QStringList download;
+    QStringList downloadFiles;
 };
 #endif // MAINWINDOW_H
