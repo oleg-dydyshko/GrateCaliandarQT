@@ -2,7 +2,6 @@
 #define DOWNLOADLIST_H
 
 #include <QDialog>
-#include <QStringList>
 
 namespace Ui {
 class DownloadList;
