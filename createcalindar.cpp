@@ -696,17 +696,27 @@ void CreateCalindar::generateCaliandar()
 
         if (sviatyia_new[DayYear][2] == "7") {
             int sv1 = sviatyiaName.indexOf("$");
-            if (sv1 != -1)
-                sviatyiaName = "<font color=#d00505><strong>" + sviatyiaName.mid(0, sv1 + 1) + "</strong></font>" + sviatyiaName.mid(sv1 + 1);
-                            else
-                sviatyiaName = "<font color=#d00505><strong>" + sviatyiaName + "</strong></font>";
+                if (sv1 != -1) {
+                    sviatyiaName = "<font color=#d00505><strong>" + sviatyiaName.mid(0, sv1 + 1) + "</strong></font>" + sviatyiaName.mid(sv1 + 1);
+                } else {
+                    int sv2 = sviatyiaName.indexOf("<br>");
+                    if (sv_per != "" && sv2 != -1)
+                        sviatyiaName = "<font color=#d00505><strong>" + sviatyiaName.mid(0, sv2) + "</strong></font>" + sviatyiaName.mid(sv2);
+                    else
+                        sviatyiaName = "<font color=#d00505><strong>" + sviatyiaName + "</strong></font>";
+                }
             }
         if (sviatyia_new[DayYear][2] == "6") {
             int sv1 = sviatyia_new_o.indexOf("$");
-            if (sv1 != -1)
+            if (sv1 != -1) {
                 sviatyiaName = "<font color=#d00505>" + sviatyiaName.mid(0, sv1 + 1) + "</font>" + sviatyiaName.mid(sv1 + 1);
-                            else
-                sviatyiaName = "<font color=#d00505>" + sviatyiaName + "</font>";
+            } else {
+                int sv2 = sviatyiaName.indexOf("<br>");
+                if (sv_per != "" && sv2 != -1)
+                    sviatyiaName = "<font color=#d00505>" + sviatyiaName.mid(0, sv2) + "</font>" + sviatyiaName.mid(sv2);
+                else
+                    sviatyiaName = "<font color=#d00505>" + sviatyiaName + "</font>";
+            }
         }
         sviatyiaName = sviatyiaName.replace("$", "");
 
