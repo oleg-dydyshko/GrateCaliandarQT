@@ -72,10 +72,7 @@ void downloadSite::dowloadSiteArray(QNetworkReply *reply) {
             int mFileModifi = info.lastModified().toSecsSinceEpoch();
             int mFileModifiSite = arr[1].toInt();
             if (mFileModifi < mFileModifiSite) {
-            //QFile file(path);
-            //if (!file.exists() || path.contains(".sql") || path.contains(".xml")) {
                 downloadFiles.append(getFile);
-            //}
             }
         }
         downloadFilesSize = downloadFiles.size() - 1;

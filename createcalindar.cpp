@@ -626,8 +626,7 @@ void CreateCalindar::generateCaliandar()
             sv_per_ch = vilikiiaGadziny;
         }
         pasha.setDate(year, CreateCalindar::DECEMBER, 24);
-        if (DayYear == pasha.dayOfYear() - 1) {
-            sv_per_ch = vilikiiaGadziny;
+        if (DayYear == pasha.dayOfYear() - 1 && (pasha.dayOfWeek() == CreateCalindar::SATURDAY || pasha.dayOfWeek() == CreateCalindar::SUNDAY)) {
             cytanneDop = "На вячэрні: Гал 3.15-22; Мц 13.31-36";
         } /*else if (DayYear == pasha.dayOfYear() - 1) {
             cytanneDop = "На вячэрні: Быц 1.1-13; Лікі 24.2-3, 5-9, 17-18; Міх 4.6-7, 5.1-4; Іс 11.1-10;\nЕр 3.35-4.4; Дан 2.31-36, 44-45; Іс 9.5-6, 7.10-16, 8.1-4, 9-10";
@@ -1030,18 +1029,18 @@ void CreateCalindar::generateCaliandar()
                 cytanneDop = sv_per_ch;
         }
         QString ton = "0";
-        if (Nedel == CreateCalindar::SUNDAY) {
-            if (sviatyaChtenia != "") {
-                for (int i = 1; i <= 8; i++) {
-                    if (sviatyaChtenia.contains("Тон " + QString::number(i))) {
-                        int t1 = sviatyaChtenia.indexOf("Тон " + QString::number(i) + ".");
-                        sviatyaChtenia = sviatyaChtenia.mid(t1 + 6).trimmed();
-                        ton = QString::number(i);
-                        break;
-                    }
+        //if (Nedel == CreateCalindar::SUNDAY) {
+        if (sviatyaChtenia != "") {
+             for (int i = 1; i <= 8; i++) {
+                if (sviatyaChtenia.contains("Тон " + QString::number(i))) {
+                    int t1 = sviatyaChtenia.indexOf("Тон " + QString::number(i) + ".");
+                    sviatyaChtenia = sviatyaChtenia.mid(t1 + 6).trimmed();
+                    ton = QString::number(i);
+                    break;
                 }
             }
         }
+        //}
         sviatyaChtenia = translateToBelarus(sviatyaChtenia);
         cytanneSV = translateToBelarus(cytanneSV);
         cytanneDop = translateToBelarus(cytanneDop);
@@ -1557,14 +1556,14 @@ void CreateCalindar::sviatyia(int Year) {
             maranata[117] = "Пс 46-47; 1 Цар 26-28; Мк 15.21-47";
             maranata[118] = "Пс 48-49; 1 Цар 29-31; Мк 16";
             maranata[119] = "Пс 50-51; 2 Цар 1-3; Иуды";
-            maranata[120] = "Пс 52-53; 2 Цар 4-6; 1 Петр 1.1-21";
-            maranata[121] = "Пс 54; 2 Цар 7-8; 1 Петр 1.22-2.25";
-            maranata[122] = "Пс 55-56; 2 Цар 9-11; 1 Петр 3";
-            maranata[123] = "Пс 57-58; 2 Цар 12-14; 1 Петр 4";
-            maranata[124] = "Пс 59-60; 2 Цар 15-17; 1 Петр 5";
-            maranata[125] = "Пс 61-62; 2 Цар 18-19; 2 Петр 1";
-            maranata[126] = "Пс 63-64; 2 Цар 20-21; 2 Петр 2";
-            maranata[127] = "Пс 65-66; 2 Цар 22; 2 Петр 3";
+            maranata[120] = "Пс 52-53; 2 Цар 4-6; 1 Пет 1.1-21";
+            maranata[121] = "Пс 54; 2 Цар 7-8; 1 Пет 1.22-2.25";
+            maranata[122] = "Пс 55-56; 2 Цар 9-11; 1 Пет 3";
+            maranata[123] = "Пс 57-58; 2 Цар 12-14; 1 Пет 4";
+            maranata[124] = "Пс 59-60; 2 Цар 15-17; 1 Пет 5";
+            maranata[125] = "Пс 61-62; 2 Цар 18-19; 2 Пет 1";
+            maranata[126] = "Пс 63-64; 2 Цар 20-21; 2 Пет 2";
+            maranata[127] = "Пс 65-66; 2 Цар 22; 2 Пет 3";
             maranata[128] = "Пс 67; 2 Цар 23-24; Иак 1";
             maranata[129] = "Пс 68; 3 Цар 1; Иак 2.1-3.13";
             maranata[130] = "Пс 69-70; 3 Цар 2-3; Иак 3.14-4.12";
