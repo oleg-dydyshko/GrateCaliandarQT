@@ -601,7 +601,7 @@ void CreateCalindar::generateCaliandar()
             sv_per_ch = "Пам.: 1 Кар 15.39-57; Ян 5.24-30";
             pameplyia = "1";
         }
-        QString vilikiiaGadziny = "Вялікія гадзіны: Габ 1.1-12; Мц 1.18-25; Гал 3.23-29; Лк 2.1-20; Габ 1.10–2.3; Мц 2.1-12; Габ 2.11-18; Мц 2.13-23";
+        QString vilikiiaGadziny = "Вялікія гадзіны: Габ 1.1-12; Мц 1.18-25; Гал 3.23-29; Лк 2.1-20; Габ 1.10-2.3; Мц 2.1-12; Габ 2.11-18; Мц 2.13-23";
         pasha.setDate(year, CreateCalindar::DECEMBER, 24);
         add = 0;
         if (pasha.dayOfWeek() == CreateCalindar::SUNDAY)
@@ -2291,6 +2291,8 @@ void CreateCalindar::sviatyia(int Year) {
             if (gosud.dayOfYear() == DayYear) return "Вялікдзень (паводле календара каталіцкай канфесіі)";
             gosud.setDate(year, month_p2, data_p2);
             if (gosud.addDays(13).dayOfYear() == DayYear) return "Вялікдзень (паводле календара праваслаўнай канфесіі)";
+            gosud.setDate(year, CreateCalindar::SEPTEMBER, 17);
+            if (gosud.dayOfYear() == DayYear) return "Дзень народнага адзінства";
             gosud.setDate(year, CreateCalindar::NOVEMBER, 2);
             if (gosud.dayOfYear() == DayYear) return "Дзень памяці";
             gosud.setDate(year, CreateCalindar::FEBRUARY, 15);
