@@ -264,17 +264,17 @@ void CreateCalindar::generateCaliandar()
                 }
             }
         }
-            if (year == CreateCalindar::outyear) {
-                QDate gc(year, month_p, data_p);
-                if (DayYear < gc.addDays(-71).dayOfYear() || DayYear > 257) {
-                    sviatyaChtenia = "Прабачце, няма дадзеных";
-                    sviaty = "";
-                } else {
-                    sviatyaChtenia = CreateCalindar::getSviaty(year, DayYear, 1);
-                }
+        if (year == CreateCalindar::outyear) {
+            QDate gc(year, month_p, data_p);
+            if (DayYear < gc.addDays(-71).dayOfYear() || DayYear > 257) {
+                sviatyaChtenia = "Прабачце, няма дадзеных";
+                sviaty = "";
             } else {
                 sviatyaChtenia = CreateCalindar::getSviaty(year, DayYear, 1);
             }
+        } else {
+            sviatyaChtenia = CreateCalindar::getSviaty(year, DayYear, 1);
+        }
 
         if (CreateCalindar::getSviaty(year, DayYear, 2) == "1")
             sviatyDay = "1";
@@ -546,14 +546,21 @@ void CreateCalindar::generateCaliandar()
                 }
             }
         }
-        pasha.setDate(year, month_p, data_p);
-        if (DayYear == pasha.addDays(189).dayOfYear() - 1) {
-            sviaty.append(", Айцоў VII Сусьветнага Сабору");
-            cytanneSV = "Айцам.: Габ 13.7-16; Ян 17.1-13";
+        for (int i = 13; i <= 19; i++) {
+            pasha.setDate(year, CreateCalindar::JULY, i);
+            int wik = pasha.dayOfWeek();
+            if (wik == CreateCalindar::SUNDAY && pasha.dayOfYear() - 1 == DayYear) {
+                sviaty.append(", Айцоў першых 6-ці Ўсяленскіх сабораў");
+                sv_per_ch = "Айцам.: Гбр 13.7-16; Ян 17.1-13";
+            }
         }
-        if (pasha.addDays(98).dayOfYear() - 1 == DayYear) {
-            sviaty.append(", Айцоў першых 6-ці Ўсяленскіх сабораў");
-            sv_per_ch = "Айцам.: Гбр 13.7-16; Ян 17.1-13";
+        for (int i = 8; i <= 14; i++) {
+            pasha.setDate(year, CreateCalindar::OCTOBER, i);
+            int wik = pasha.dayOfWeek();
+            if (wik == CreateCalindar::SUNDAY && pasha.dayOfYear() - 1 == DayYear) {
+                sviaty.append(", Айцоў VII Сусьветнага Сабору");
+                cytanneSV = "Айцам.: Габ 13.7-16; Ян 17.1-13";
+            }
         }
         pasha.setDate(year, CreateCalindar::SEPTEMBER, 1);
         if (DayYear == pasha.dayOfYear() - 1) {
