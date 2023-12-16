@@ -38,7 +38,7 @@ void downloadSite::download() {
         malitounikPatch = malitounik.toString();
     }
     networkManager = new QNetworkAccessManager(this);
-    QUrl url("https://carkva-gazeta.by/admin/backup.php");
+    QUrl url("https://android.carkva-gazeta.by/admin/backup.php");
     QNetworkRequest request(url);
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
     QUrlQuery params;
@@ -72,7 +72,7 @@ void downloadSite::dowloadSiteArray(QNetworkReply *reply) {
             int mFileModifi = info.lastModified().toSecsSinceEpoch();
             int mFileModifiSite = arr[1].toInt();
             if (mFileModifi < mFileModifiSite) {
-                downloadFiles.append(getFile);
+                downloadFiles.append(getFile.replace("carkva-gazeta.by", "android.carkva-gazeta.by"));
             }
         }
         downloadFilesSize = downloadFiles.size() - 1;
@@ -87,7 +87,7 @@ void downloadSite::dowloadSiteFile(QNetworkReply *reply) {
     if(!reply->error()){
         QByteArray array = reply->readAll();
         QString getFile = downloadFiles.at(downloadSite::position).toString();
-        QString path = getFile.replace("https://carkva-gazeta.by", carkvaPatch);
+        QString path = getFile.replace("https://android.carkva-gazeta.by", carkvaPatch);
         int t1 = path.lastIndexOf("/");
         QString dirPath = path.mid(0, t1);
         QDir dirs(dirPath);

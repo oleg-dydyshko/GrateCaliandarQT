@@ -57,7 +57,7 @@ void CreateCalindar::generate()
     }
     if (CreateCalindar::copySiteProgram) {
         connect(networkManager, &QNetworkAccessManager::finished, this, &CreateCalindar::onResult);
-        networkManager->get(QNetworkRequest(QUrl("https://carkva-gazeta.by/admin/getFiles.php?yearIn=" + QString::number(CreateCalindar::inyear) + "&yearOut=" + QString::number(CreateCalindar::outyear))));
+        networkManager->get(QNetworkRequest(QUrl("https://android.carkva-gazeta.by/admin/getFiles.php?yearIn=" + QString::number(CreateCalindar::inyear) + "&yearOut=" + QString::number(CreateCalindar::outyear))));
     } else {
         CreateCalindar::generateCaliandar();
     }
@@ -297,11 +297,15 @@ void CreateCalindar::generateCaliandar()
         }
         pasha.setDate(year, CreateCalindar::MARCH, 24);
         if (DayYear == pasha.dayOfYear() - 1) {
-            predsviaty = "<em>Перадсьвяцьце Дабравешчаньня</em>";
+            if (predsviaty != "")
+                predsviaty = predsviaty + "<br><em>Перадсьвяцьце Дабравешчаньня</em>";
+            else predsviaty = "<em>Перадсьвяцьце Дабравешчаньня</em>";
         }
         pasha.setDate(year, CreateCalindar::MARCH, 26);
         if (DayYear == pasha.dayOfYear() - 1) {
-            predsviaty = "<em>Адданьне сьвята Дабравешчаньня</em>";
+            if (predsviaty != "")
+                predsviaty = predsviaty + "<br><em>Адданьне сьвята Дабравешчаньня</em>";
+            else predsviaty = "<em>Адданьне сьвята Дабравешчаньня</em>";
         }
         pasha.setDate(year, CreateCalindar::JULY, 31);
         if (DayYear == pasha.dayOfYear() - 1) {
@@ -325,7 +329,7 @@ void CreateCalindar::generateCaliandar()
         }
         pasha.setDate(year, CreateCalindar::SEPTEMBER, 7);
         if (DayYear == pasha.dayOfYear() - 1) {
-            predsviaty = "<em>Перадсьвяцьце Нараджэньня Найсьв. Багародзіцы</em>";
+            predsviaty = "<em>Перадсьвяцьце Нараджэньня Найсьвяцейшай Багародзіцы</em>";
         }
         pasha.setDate(year, CreateCalindar::SEPTEMBER, 12);
         if (DayYear == pasha.dayOfYear() - 1) {
@@ -371,14 +375,14 @@ void CreateCalindar::generateCaliandar()
         }
         pasha.setDate(year, month_p, data_p);
         if (DayYear == pasha.addDays(23).dayOfYear()) {
-            predsviaty = "<strong>Палова сьвята Пяцідзесятніцы</strong>";
+            predsviaty = "<strong>Палова сьвята Пяцідзясятніцы</strong>";
         }
         for (int i = 7; i <= 13; i++) {
             pasha.setDate(year, CreateCalindar::SEPTEMBER, i);
             int dayofweek = pasha.dayOfWeek();
             if (DayYear == pasha.dayOfYear() - 1 && CreateCalindar::SATURDAY == dayofweek) {
                 if (i == 12)
-                    predsviaty = predsviaty + "<br>" + "<strong>Субота перад Крыжаўзвышэньнем</strong>";
+                    predsviaty = predsviaty + "<br><strong>Субота перад Крыжаўзвышэньнем</strong>";
                 else
                     predsviaty = "<strong>Субота перад Крыжаўзвышэньнем</strong>";
                 sv_per_ch = "Суб.: 1 Кар 2.6-9; Мц 10.37-11.1";
@@ -397,7 +401,7 @@ void CreateCalindar::generateCaliandar()
             int dayofweek = pasha.dayOfWeek();
             if (DayYear == pasha.dayOfYear() - 1 && CreateCalindar::SUNDAY == dayofweek) {
                 predsviaty = "<strong>Нядзеля перад Крыжаўзвышэньнем</strong>";
-                sv_per_ch = "Нядз.: Гал 6.11-18; Ян 3.13-17";
+                //sv_per_ch = "Нядз.: Гал 6.11-18; Ян 3.13-17";
             }
         }
         for (int i = 15; i <= 21; i++) {
@@ -405,7 +409,7 @@ void CreateCalindar::generateCaliandar()
             int dayofweek = pasha.dayOfWeek();
             if (DayYear == pasha.dayOfYear() - 1 && CreateCalindar::SUNDAY == dayofweek) {
                 predsviaty = "<strong>Нядзеля пасьля Крыжаўзвышэньня</strong>";
-                sv_per_ch = "Нядз.: Гал 2.16-20; Мк 8.34-9.1";
+                //sv_per_ch = "Нядз.: Гал 2.16-20; Мк 8.34-9.1";
             }
         }
         for (int i = 7; i <= 13; i++) {
@@ -413,7 +417,7 @@ void CreateCalindar::generateCaliandar()
             int dayofweek = pasha.dayOfWeek();
             if (DayYear == pasha.dayOfYear() - 1 && CreateCalindar::SUNDAY == dayofweek) {
                 //predsviaty = "<strong>Нядзеля пасьля Богазьяўленьня</strong>";
-                sv_per_ch = "Нядз.: Эф 4.7-13; Мц 4.12-17";
+                //sv_per_ch = "Нядз.: Эф 4.7-13; Мц 4.12-17";
             }
         }
 
@@ -492,7 +496,8 @@ void CreateCalindar::generateCaliandar()
             predsviaty = "СЬВЯТЫ ВЕЧАР ПЕРАД РАСТВОМ ХРЫСТОВЫМ";
         }
         pasha.setDate(year, month_p, data_p);
-        if (DayYear == pasha.addDays(-44).dayOfYear()) {
+        QDate typonDate(year, CreateCalindar::FEBRUARY, 17);
+        if (DayYear == pasha.addDays(-44).dayOfYear() && DayYear != typonDate.dayOfYear() - 1) {
             QDate vtt(year, CreateCalindar::FEBRUARY, 17);
             if (vtt.dayOfYear() - 1 != pasha.dayOfYear()) {
             sv_per.append("Вялікамуч. Тодара Тырона");
@@ -554,7 +559,7 @@ void CreateCalindar::generateCaliandar()
                 sv_per_ch = "Айцам.: Гбр 13.7-16; Ян 17.1-13";
             }
         }
-        for (int i = 8; i <= 14; i++) {
+        for (int i = 11; i <= 17; i++) {
             pasha.setDate(year, CreateCalindar::OCTOBER, i);
             int wik = pasha.dayOfWeek();
             if (wik == CreateCalindar::SUNDAY && pasha.dayOfYear() - 1 == DayYear) {
@@ -685,7 +690,11 @@ void CreateCalindar::generateCaliandar()
             QString br = "";
             if (sviatyia_new_o != "" && sv_per != "")
                 br = "<br>";
-            sviatyiaName = sviatyia_new_o + br + sv_per;
+            if (sv_per.contains("Пачатак царкоўнага году")) {
+                sviatyiaName = sv_per + br + sviatyia_new_o;
+            } else {
+                sviatyiaName = sviatyia_new_o + br + sv_per;
+            }
         }
         for (int dny = 24; dny <= 30; dny++) {
             pasha.setDate(year, CreateCalindar::JUNE, dny);
@@ -799,11 +808,12 @@ void CreateCalindar::generateCaliandar()
         QDate calendar_pasha(year, CreateCalindar::JANUARY, 1);
         int i3 = calendar_pasha.dayOfYear() - 1;
         if (DayYear == i3) {
-            sviaty = "АБРЭЗАНЬНЕ ГАСПОДНЯЕ";
             if (Nedel == CreateCalindar::SUNDAY && !sviatyaChtenia.isEmpty()) {
-                cytanneDop = "На ютрані: Ян 10.9-16;\nКал 2.8-12; Лк 2.20-21, 40-52";
+                cytanneDop = "Абр: Кал 2.8-12; Лк 2.20-21, 40-52";
+                sviaty = "<strong>" + sviaty + "</strong>\nАБРЭЗАНЬНЕ ГАСПОДНЯЕ";
             } else {
                 sviatyaChtenia = "На ютрані: Ян 10.9-16;\nКал 2.8-12; Лк 2.20-21, 40-52";
+                sviaty = "АБРЭЗАНЬНЕ ГАСПОДНЯЕ";
             }
             post = false;
             postBild = "0";
@@ -899,7 +909,7 @@ void CreateCalindar::generateCaliandar()
             if (bagar == 1) linurgia = "Літургія сьв. Васіля Вялікага";
             post = false;
             postBild = "0";
-            if ((DayYear >= Pasxa - 8 && DayYear <= Pasxa) || Nedel == CreateCalindar::SUNDAY) {
+            if (Nedel == CreateCalindar::SUNDAY) {
                 sviaty.append("\n").append("\nДАБРАВЕШЧАНЬНЕ НАЙСЬВЯЦЕЙШАЙ БАГАРОДЗІЦЫ");
                 cytanneDop = "Дабравешчаньне: Тон 8. На ютрані: Лк 1.39-49, 56;\nГаб 9.11-14; Мк 10.32-45;\n" + linurgia + " Габ 2.11-18; Лк 1.24-38";
             } else {
@@ -1004,6 +1014,9 @@ void CreateCalindar::generateCaliandar()
             mun = c2.month();
             munAdapter++;
         }
+        QDate gc(year, month_p, data_p);
+        QDate tdate(year, c2.month(), c2.day());
+        int raznica = tdate.dayOfYear() - gc.dayOfYear();
         int javaNedel = Nedel + 1;
         if (javaNedel == 8) javaNedel = 1;
         arrayList.append(QString::number(javaNedel)); //День недели 0
@@ -1064,7 +1077,6 @@ void CreateCalindar::generateCaliandar()
         arrayList.append(pameplyia); // Умершие 18
         arrayList.append(sviatyPKC(DayYear, year)); // Римо-каталические праздники 19
 
-        QDate gc(year, month_p, data_p);
         if (year == CreateCalindar::outyear) {
             if (DayYear < gc.dayOfYear() || DayYear > 257) {
                 arrayList.append("0"); // Тон в Воскресенье 20
@@ -1075,11 +1087,11 @@ void CreateCalindar::generateCaliandar()
             arrayList.append(ton); // Тон в Воскресенье 20
         }
         arrayList.append(sviachanni); // Блаславеньні на сьвяты 21
-        QDate tdate(year, c2.month(), c2.day());
-        int raznica = tdate.dayOfYear() - gc.dayOfYear();
         arrayList.append(QString::number(raznica)); // Количество дней до и после Пасхи 22
         arrayList.append(QString::number(munAdapter)); // Номер позиции в месячном адапторе 23
-        arrayList.append(QString::number(c2.dayOfYear())); // День в году 24
+        int dayInYear = c2.dayOfYear();
+        if (!c2.isLeapYear(year) && dayInYear > 59) dayInYear++;
+        arrayList.append(QString::number(dayInYear)); // День в году 24
         arrayList.append(QString::number(e - 1)); //Номер позиции в адапторе 25
         arrayList.append(QString::number(niadzeliaAdapter)); //Номер позиции в недельном адапторе 26
         arrayListsNelel.append(arrayList);
@@ -1103,7 +1115,7 @@ void CreateCalindar::generateCaliandar()
 
 void CreateCalindar::setViersionApp(bool relise) {
     QNetworkAccessManager * manager = new QNetworkAccessManager(this);
-    QUrl url("https://carkva-gazeta.by/admin/android.php");
+    QUrl url("https://android.carkva-gazeta.by/admin/android.php");
     QNetworkRequest request(url);
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
     QUrlQuery params;
@@ -1131,7 +1143,7 @@ void CreateCalindar::onResult(QNetworkReply *reply)
             for (int i = 0; i < download.size();i++) {
                 QJsonValue val = download.at(i);
                 QJsonArray arr = val.toArray();
-                QString filePath = arr[0].toString();
+                QString filePath = arr[0].toString().replace("carkva-gazeta.by", "android.carkva-gazeta.by");
                 QString path = arr[0].toString().replace("https://carkva-gazeta.by", carkvaPatch);
                 if (path.contains("admin/getFilesCaliandar.php?year=")) {
                     int t1 = path.lastIndexOf("=");
@@ -1167,7 +1179,7 @@ void CreateCalindar::onDownload(QNetworkReply *reply)
     }
     QByteArray read = reply->readAll();
         QString getFile = ja.at(position).toString();
-        getFile = getFile.replace("https://carkva-gazeta.by", "");
+        getFile = getFile.replace("https://android.carkva-gazeta.by", "");
         int t1 = getFile.lastIndexOf("/");
         QString filename = carkvaPatch + getFile;
         QString dir = carkvaPatch + getFile.mid(0, t1);
@@ -1981,7 +1993,11 @@ void CreateCalindar::sviatyia(int Year) {
                 sabytiePKC = "Ахвяраваньне Пана\n(паводле календара РКЦ)";
             }
             pkc.setDate(year, CreateCalindar::MARCH, 19);
-            if (pkc.dayOfYear() == DayYear) {
+            int uzaf = 0;
+            if (pkc.dayOfWeek() == CreateCalindar::SUNDAY) {
+                uzaf = 1;
+            }
+            if (pkc.addDays(uzaf).dayOfYear() == DayYear) {
                 sabytiePKC = "Сьвятога Юзафа\n(паводле календара РКЦ)";
             }
             pkc.setDate(year, CreateCalindar::JUNE, 29);
@@ -2695,6 +2711,9 @@ void CreateCalindar::sviatyia(int Year) {
             gosud.setDate(year, CreateCalindar::OCTOBER, 14);
             if (gosud.dayOfYear() == DayYear)
                 result.insert(0, "Дзень маці\n");
+            gosud.setDate(year, CreateCalindar::OCTOBER, 21);
+            if (gosud.dayOfYear() == DayYear)
+                result.insert(0, "Дзень бацькі\n");
             gosud.setDate(year, CreateCalindar::DECEMBER, 3);
             if (gosud.dayOfYear() == DayYear)
                 result.insert(0, "Дзень інвалідаў Рэспублікі Беларусь\n");
