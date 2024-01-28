@@ -735,16 +735,20 @@ void CreateCalindar::generateCaliandar()
         }
         sviatyiaName = sviatyiaName.replace("$", "");
 
+        if (bogaziaulenneNed == CreateCalindar::SATURDAY) {
+            bogaziaulenne = bogaziaulenne - 1;
+        }
         if (bogaziaulenneNed == CreateCalindar::SUNDAY) {
             bogaziaulenne = bogaziaulenne - 2;
-        } else if (bogaziaulenneNed == CreateCalindar::SATURDAY) {
-            bogaziaulenne = bogaziaulenne - 1;
         }
         if (AdsiachenneGalavyNed == CreateCalindar::SUNDAY) {
             AdsiachenneGalavy = AdsiachenneGalavy - 2;
         }
         if (KrygaUzvyshenneNed == CreateCalindar::SUNDAY) {
             KrygaUzvyshenne = KrygaUzvyshenne - 2;
+        }
+        if (KaliadyNed == CreateCalindar::SATURDAY) {
+            Kaliady = Kaliady - 1;
         }
         if (KaliadyNed == CreateCalindar::SUNDAY) {
             Kaliady = Kaliady - 2;
@@ -754,9 +758,9 @@ void CreateCalindar::generateCaliandar()
         if (sviatyia_new[DayYear][3] == "1") {
             tipicon = "1";
         }
-        if (sviatyia_new[DayYear][3] == "2") {
+        /*if (sviatyia_new[DayYear][3] == "2") {
             tipicon = "2";
-        }
+        }*/
         if (sviatyia_new[DayYear][3] == "3") {
             tipicon = "3";
         }
@@ -766,9 +770,9 @@ void CreateCalindar::generateCaliandar()
         if (sviatyia_new[DayYear][3] == "5") {
             tipicon = "5";
         }
-        if (sviatyDay == "1") {
+        /*if (sviatyDay == "1") {
             tipicon = "2";
-        }
+        }*/
 
         pasha.setDate(year, month_p, data_p);
         int pasxa = pasha.dayOfYear() - 1;
@@ -818,7 +822,7 @@ void CreateCalindar::generateCaliandar()
             post = false;
             postBild = "0";
             sviatyDay = "2";
-            tipicon = "2";
+            //tipicon = "2";
         }
         calendar_pasha.setDate(year, CreateCalindar::JUNE, 24);
         i3 = calendar_pasha.dayOfYear() - 1;
@@ -832,7 +836,7 @@ void CreateCalindar::generateCaliandar()
             post = false;
             postBild = "0";
             sviatyDay = "2";
-            tipicon = "2";
+            //tipicon = "2";
         }
         calendar_pasha.setDate(year, CreateCalindar::JUNE, 29);
         i3 = calendar_pasha.dayOfYear() - 1;
@@ -846,7 +850,7 @@ void CreateCalindar::generateCaliandar()
             post = false;
             postBild = "0";
             sviatyDay = "2";
-            tipicon = "2";
+            //tipicon = "2";
         }
         calendar_pasha.setDate(year, CreateCalindar::AUGUST, 29);
         i3 = calendar_pasha.dayOfYear() - 1;
@@ -858,7 +862,7 @@ void CreateCalindar::generateCaliandar()
                 sviatyaChtenia = "На ютрані: Мц 14.1-13;\nДз 13.25-32; Мк 6.14-30";
             }
             sviatyDay = "2";
-            tipicon = "2";
+            //tipicon = "2";
         }
         calendar_pasha.setDate(year, CreateCalindar::OCTOBER, 1);
         i3 = calendar_pasha.dayOfYear() - 1;
@@ -872,7 +876,7 @@ void CreateCalindar::generateCaliandar()
             post = false;
             postBild = "0";
             sviatyDay = "2";
-            tipicon = "2";
+            //tipicon = "2";
         }
         // когда выпадают ДВУНАДЗЯСЯТЫЯ СЬВЯТЫ относительно Пасхі, кроме зависящих от неё
         calendar_pasha.setDate(year, CreateCalindar::JANUARY, 6);
@@ -884,7 +888,7 @@ void CreateCalindar::generateCaliandar()
             sviatyaChtenia = "На ютрані: Мк 1.9-11;\nЦіт 2.11-14, 3.4-7; Мц 3.13-17";
             sv_per_ch = "На асьвячэньне вады: 1 Кар 10.1-4; Мк 1.9-11";
             sviatyDay = "1";
-            tipicon = "2";
+            //tipicon = "2";
         }
         calendar_pasha.setDate(year, FEBRUARY, 2);
         i3 = calendar_pasha.dayOfYear() - 1;
@@ -899,7 +903,7 @@ void CreateCalindar::generateCaliandar()
                 sviatyaChtenia = "На ютрані: Лк 2.25-32;\nГаб 7.7-17; Лк 2.22-40";
             }
             sviatyDay = "1";
-            tipicon = "2";
+            //tipicon = "2";
         }
         calendar_pasha.setDate(year, CreateCalindar::MARCH, 25);
         i3 = calendar_pasha.dayOfYear() - 1;
@@ -917,7 +921,7 @@ void CreateCalindar::generateCaliandar()
                 sviatyaChtenia = "Тон 8. На ютрані: Лк 1.39-49, 56;\nГаб 9.11-14; Мк 10.32-45;\n" + linurgia + " Габ 2.11-18; Лк 1.24-38";
             }
             sviatyDay = "1";
-            tipicon = "2";
+            //tipicon = "2";
         }
         calendar_pasha.setDate(year, CreateCalindar::AUGUST, 6);
         i3 = calendar_pasha.dayOfYear() - 1;
@@ -927,7 +931,7 @@ void CreateCalindar::generateCaliandar()
             sviaty = "ПЕРАМЯНЕНЬНЕ ГОСПАДА НАШАГА ІСУСА ХРЫСТА";
             sviatyaChtenia = "На ютрані: Лк 9.28-36;\n2 Пт 1.10-19; Мц 17.1-9";
             sviatyDay = "1";
-            tipicon = "2";
+            //tipicon = "2";
         }
         calendar_pasha.setDate(year, CreateCalindar::AUGUST, 15);
         i3 = calendar_pasha.dayOfYear() - 1;
@@ -941,7 +945,7 @@ void CreateCalindar::generateCaliandar()
                 sviatyaChtenia = "На ютрані: Лк 1.39-49, 56;\nФлп 2.5-11; Лк 10.38-42, 11.27-28";
             }
             sviatyDay = "1";
-            tipicon = "2";
+            //tipicon = "2";
         }
         calendar_pasha.setDate(year, CreateCalindar::SEPTEMBER, 8);
         i3 = calendar_pasha.dayOfYear() - 1;
@@ -955,7 +959,7 @@ void CreateCalindar::generateCaliandar()
                 sviatyaChtenia = "На ютрані: Лк 1.39-49, 56;\nФлп 2.5-11; Лк 10.38-42, 11.27-28";
             }
             sviatyDay = "1";
-            tipicon = "2";
+            //tipicon = "2";
         }
         calendar_pasha.setDate(year, CreateCalindar::SEPTEMBER, 14);
         i3 = calendar_pasha.dayOfYear() - 1;
@@ -963,7 +967,7 @@ void CreateCalindar::generateCaliandar()
             sviaty = "УЗВЫШЭНЬНЕ ПАЧЭСНАГА І ЖЫЦЬЦЯДАЙНАГА КРЫЖА";
             sviatyaChtenia = "На ютрані: Ян 12.28-36;\n1 Кар 1.18-24; Ян 19.6-11, 13-20, 25-28, 30-35";
             sviatyDay = "1";
-            tipicon = "2";
+            //tipicon = "2";
         }
         calendar_pasha.setDate(year, CreateCalindar::NOVEMBER, 21);
         i3 = calendar_pasha.dayOfYear() - 1;
@@ -977,7 +981,7 @@ void CreateCalindar::generateCaliandar()
                 sviatyaChtenia = "На ютрані: Лк 1.39-49, 56;\nГаб 9.1-7; Лк 10.38-42, 11.27-28";
             }
             sviatyDay = "1";
-            tipicon = "2";
+            //tipicon = "2";
         }
         calendar_pasha.setDate(year, CreateCalindar::DECEMBER, 25);
         i3 = calendar_pasha.dayOfYear() - 1;
@@ -987,7 +991,7 @@ void CreateCalindar::generateCaliandar()
             sviaty = "НАРАДЖЭНЬНЕ ГОСПАДА НАШАГА ІСУСА ХРЫСТА (РАСТВО)";
             sviatyaChtenia = "На ютрані: Мц 1.18-25;\nГал 4.4-7; Мц 2.1-12";
             sviatyDay = "1";
-            tipicon = "2";
+            //tipicon = "2";
         }
         // когда выпадают ПРЕДПРАЗДНИЧНЫЕ ДНИ относительно Пасхі
         calendar_pasha.setDate(year, CreateCalindar::JANUARY, 5);
