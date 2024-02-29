@@ -905,12 +905,16 @@ void CreateCalindar::generateCaliandar()
             sviatyDay = "1";
             //tipicon = "2";
         }
+        QDate gc(year, month_p, data_p);
+        QDate tdate(year, c2.month(), c2.day());
+        int raznica = tdate.dayOfYear() - gc.dayOfYear();
         calendar_pasha.setDate(year, CreateCalindar::MARCH, 25);
         i3 = calendar_pasha.dayOfYear() - 1;
         if (DayYear == i3) {
             QString linurgia = "Літургія сьв. Яна Залатавуснага";
             int bagar = calendar_pasha.dayOfWeek();
-            if (bagar <= CreateCalindar::FRIDAY) linurgia = "Літургія сьв. Яна Залатавуснага з вячэрняй"; //Літургія сьв. Васіля Вялікага
+            if (raznica == -3) linurgia = "Літургія сьв. Васіля Вялікага з вячэрняй";
+            else if (bagar <= CreateCalindar::FRIDAY) linurgia = "Літургія сьв. Яна Залатавуснага з вячэрняй";
             post = false;
             postBild = "0";
             if (Nedel == CreateCalindar::SUNDAY) {
@@ -1018,9 +1022,6 @@ void CreateCalindar::generateCaliandar()
             mun = c2.month();
             munAdapter++;
         }
-        QDate gc(year, month_p, data_p);
-        QDate tdate(year, c2.month(), c2.day());
-        int raznica = tdate.dayOfYear() - gc.dayOfYear();
         int javaNedel = Nedel + 1;
         if (javaNedel == 8) javaNedel = 1;
         arrayList.append(QString::number(javaNedel)); //День недели 0
