@@ -890,7 +890,7 @@ void CreateCalindar::generateCaliandar()
             sviatyDay = "1";
             //tipicon = "2";
         }
-        calendar_pasha.setDate(year, FEBRUARY, 2);
+        calendar_pasha.setDate(year, CreateCalindar::FEBRUARY, 2);
         i3 = calendar_pasha.dayOfYear() - 1;
         if (DayYear == i3) {
             post = false;
@@ -910,12 +910,12 @@ void CreateCalindar::generateCaliandar()
         if (DayYear == i3) {
             QString linurgia = "Літургія сьв. Яна Залатавуснага";
             int bagar = calendar_pasha.dayOfWeek();
-            if (bagar == 1) linurgia = "Літургія сьв. Васіля Вялікага";
+            if (bagar <= CreateCalindar::FRIDAY) linurgia = "Літургія сьв. Яна Залатавуснага з вячэрняй"; //Літургія сьв. Васіля Вялікага
             post = false;
             postBild = "0";
             if (Nedel == CreateCalindar::SUNDAY) {
                 sviaty.append("\n").append("\nДАБРАВЕШЧАНЬНЕ НАЙСЬВЯЦЕЙШАЙ БАГАРОДЗІЦЫ");
-                cytanneDop = "Дабравешчаньне: Тон 8. На ютрані: Лк 1.39-49, 56;\nГаб 9.11-14; Мк 10.32-45;\n" + linurgia + " Габ 2.11-18; Лк 1.24-38";
+                cytanneDop = "Дабравешчаньне: Тон 8. На ютрані: Лк 1.39-49, 56;\nГаб 9.11-14; Мк 10.32-45;\nГаб 2.11-18; Лк 1.24-38";
             } else {
                 sviaty = "ДАБРАВЕШЧАНЬНЕ НАЙСЬВЯЦЕЙШАЙ БАГАРОДЗІЦЫ";
                 sviatyaChtenia = "Тон 8. На ютрані: Лк 1.39-49, 56;\nГаб 9.11-14; Мк 10.32-45;\n" + linurgia + " Габ 2.11-18; Лк 1.24-38";
