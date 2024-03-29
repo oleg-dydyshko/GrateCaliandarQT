@@ -613,7 +613,6 @@ void CreateCalindar::generateCaliandar()
             sv_per_ch = "Пам.: 1 Кар 15.39-57; Ян 5.24-30";
             pameplyia = "1";
         }
-        QString vilikiiaGadziny = "Вялікія гадзіны: Габ 1.1-12; Мц 1.18-25; Гал 3.23-29; Лк 2.1-20; Габ 1.10-2.3; Мц 2.1-12; Габ 2.11-18; Мц 2.13-23";
         pasha.setDate(year, CreateCalindar::DECEMBER, 24);
         add = 0;
         if (pasha.dayOfWeek() == CreateCalindar::SUNDAY)
@@ -621,9 +620,9 @@ void CreateCalindar::generateCaliandar()
         if (pasha.dayOfWeek() == CreateCalindar::SATURDAY)
             add = -1;
         if (DayYear == pasha.addDays(add).dayOfYear() - 1) {
-            sv_per_ch = vilikiiaGadziny;
+            sv_per_ch = "Вялікія гадзіны: Габ 1.1-12; Мц 1.18-25; Гал 3.23-29; Лк 2.1-20; Габ 1.10-2.3; Мц 2.1-12; Габ 2.11-18; Мц 2.13-23";
         }
-        pasha.setDate(year, CreateCalindar::JANUARY, 5);
+        /*pasha.setDate(year, CreateCalindar::JANUARY, 5);
         add = 0;
         if (pasha.dayOfWeek() == CreateCalindar::SUNDAY)
             add = -2;
@@ -631,11 +630,11 @@ void CreateCalindar::generateCaliandar()
             add = -1;
         if (DayYear == pasha.addDays(add).dayOfYear() - 1) {
             sv_per_ch = vilikiiaGadziny;
-        }
+        }*/
         pasha.setDate(year, month_p, data_p);
         if (DayYear == pasha.addDays(-2).dayOfYear() - 1) {
             predsviaty = "<em>Вялікая пятніца.<br>Успамін мукаў і сьмерці Хрыстовай</em>";
-            sv_per_ch = vilikiiaGadziny;
+            sv_per_ch = "Вялікія гадзіны: Зах 11.10-13; Гал 6.14-18; Мц 27.1-56; Іс 50.4-11; Рым 5.6-10; Мк 15.16-41; Іс 52.13-54.1; Гбр 2.11-18; Лк 23.32-49; Ярэм 11.18-12.5; 9-11; 14-15; Гбр 10.19-31; Ян 18.28-19.37";
         }
         pasha.setDate(year, CreateCalindar::DECEMBER, 24);
         if (DayYear == pasha.dayOfYear() - 1 && (pasha.dayOfWeek() == CreateCalindar::SATURDAY || pasha.dayOfWeek() == CreateCalindar::SUNDAY)) {
