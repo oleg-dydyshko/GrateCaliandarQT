@@ -622,15 +622,15 @@ void CreateCalindar::generateCaliandar()
         if (DayYear == pasha.addDays(add).dayOfYear() - 1) {
             sv_per_ch = "Вялікія гадзіны: Габ 1.1-12; Мц 1.18-25; Гал 3.23-29; Лк 2.1-20; Габ 1.10-2.3; Мц 2.1-12; Габ 2.11-18; Мц 2.13-23";
         }
-        /*pasha.setDate(year, CreateCalindar::JANUARY, 5);
+        pasha.setDate(year, CreateCalindar::JANUARY, 5);
         add = 0;
         if (pasha.dayOfWeek() == CreateCalindar::SUNDAY)
             add = -2;
         if (pasha.dayOfWeek() == CreateCalindar::SATURDAY)
             add = -1;
         if (DayYear == pasha.addDays(add).dayOfYear() - 1) {
-            sv_per_ch = vilikiiaGadziny;
-        }*/
+            sv_per_ch = "Вялікія гадзіны: Іс 35.1-10; Дз 13.25-33; Мц 3.1-6; Іс 1.16-20; Дз 19.1-8; Мк 1.1-8; Іс 2.3-6; Рым 6.3-11; Мк 1.9-11; Іс 49.8-15; Ціт 2.11-14, 3.4-7; Мц 3.13-17";
+        }
         pasha.setDate(year, month_p, data_p);
         if (DayYear == pasha.addDays(-2).dayOfYear() - 1) {
             predsviaty = "<em>Вялікая пятніца.<br>Успамін мукаў і сьмерці Хрыстовай</em>";
