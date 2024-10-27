@@ -634,13 +634,13 @@ void CreateCalindar::generateCaliandar()
         pasha.setDate(year, month_p, data_p);
         if (DayYear == pasha.addDays(-2).dayOfYear() - 1) {
             predsviaty = "<em>Вялікая пятніца.<br>Успамін мукаў і сьмерці Хрыстовай</em>";
-            sv_per_ch = "Вялікія гадзіны: Зах 11.10-13; Гал 6.14-18; Мц 27.1-56; Іс 50.4-11; Рым 5.6-10; Мк 15.16-41; Іс 52.13-54.1; Гбр 2.11-18; Лк 23.32-49; Ярэм 11.18-12.5; 9-11; 14-15; Гбр 10.19-31; Ян 18.28-19.37";
+            sv_per_ch = "Вялікія гадзіны: Зах 11.10-13; Гал 6.14-18; Мц 27.1-56; Іс 50.4-11; Рым 5.6-10; Мк 15.16-41; Іс 52.13-54.1; Гбр 2.11-18; Лк 23.32-49; Ярэм 11.18-12.5, 9-11, 14-15; Гбр 10.19-31; Ян 18.28-19.37";
         }
         pasha.setDate(year, CreateCalindar::DECEMBER, 24);
         if (DayYear == pasha.dayOfYear() - 1 && (pasha.dayOfWeek() == CreateCalindar::SATURDAY || pasha.dayOfWeek() == CreateCalindar::SUNDAY)) {
             cytanneDop = "На вячэрні: Гал 3.15-22; Мц 13.31-36";
         } /*else if (DayYear == pasha.dayOfYear() - 1) {
-            cytanneDop = "На вячэрні: Быц 1.1-13; Лікі 24.2-3, 5-9, 17-18; Міх 4.6-7, 5.1-4; Іс 11.1-10;\nЕр 3.35-4.4; Дан 2.31-36, 44-45; Іс 9.5-6, 7.10-16, 8.1-4, 9-10";
+            cytanneDop = "На вячэрні: Быц 1.1-13; Лікі 24.2-3, 5-9, 17-18; Міх 4.6-7, 5.1-4; Іс 11.1-10\nЕр 3.35-4.4; Дан 2.31-36, 44-45; Іс 9.5-6, 7.10-16, 8.1-4, 9-10";
         }*/
         pasha.setDate(year, CreateCalindar::JANUARY, 5);
         if (DayYear == pasha.dayOfYear() - 1 && (pasha.dayOfWeek() == CreateCalindar::SATURDAY || pasha.dayOfWeek() == CreateCalindar::SUNDAY)) {
@@ -815,7 +815,7 @@ void CreateCalindar::generateCaliandar()
                 cytanneDop = "Абр: Кал 2.8-12; Лк 2.20-21, 40-52";
                 sviaty = "<strong>" + sviaty + "</strong>\nАБРЭЗАНЬНЕ ГАСПОДНЯЕ";
             } else {
-                sviatyaChtenia = "На ютрані: Ян 10.9-16;\nКал 2.8-12; Лк 2.20-21, 40-52";
+                sviatyaChtenia = "На ютрані: Ян 10.9-16\nКал 2.8-12; Лк 2.20-21, 40-52";
                 sviaty = "АБРЭЗАНЬНЕ ГАСПОДНЯЕ";
             }
             post = false;
@@ -828,9 +828,9 @@ void CreateCalindar::generateCaliandar()
         if (DayYear == i3) {
             sviaty = "НАРАДЖЭНЬНЕ СЬВ. ЯНА ПРАДВЕСЬНІКА І ХРЫСЬЦІЦЕЛЯ ГАСПОДНЯГА";
             if (Nedel == CreateCalindar::SUNDAY && !sviatyaChtenia.isEmpty()) {
-                cytanneDop = "На ютрані: Лк 1.24-25, 57-68, 76, 80;\nРым 13.12-14.4; Лк 1.5-25, 57-68, 76, 80";
+                cytanneDop = "На ютрані: Лк 1.24-25, 57-68, 76, 80\nРым 13.12-14.4; Лк 1.5-25, 57-68, 76, 80";
             } else {
-                sviatyaChtenia = "На ютрані: Лк 1.24-25, 57-68, 76, 80;\nРым 13.12-14.4; Лк 1.5-25, 57-68, 76, 80";
+                sviatyaChtenia = "На ютрані: Лк 1.24-25, 57-68, 76, 80\nРым 13.12-14.4; Лк 1.5-25, 57-68, 76, 80";
             }
             post = false;
             postBild = "0";
@@ -842,9 +842,9 @@ void CreateCalindar::generateCaliandar()
         if (DayYear == i3) {
             sviaty = "СЬВЯТЫХ СЛАЎНЫХ І ЎСЯХВАЛЬНЫХ ВЯРХОЎНЫХ АПОСТАЛАЎ ПЯТРА І ПАЎЛА";
             if (Nedel == CreateCalindar::SUNDAY && !sviatyaChtenia.isEmpty()) {
-                cytanneDop = "На ютрані: Ян 21.15-25;\n2 Кар 11.21-12.9; Мц 16.13-19";
+                cytanneDop = "На ютрані: Ян 21.15-25\n2 Кар 11.21-12.9; Мц 16.13-19";
             } else {
-                sviatyaChtenia = "На ютрані: Ян 21.15-25;\n2 Кар 11.21-12.9; Мц 16.13-19";
+                sviatyaChtenia = "На ютрані: Ян 21.15-25\n2 Кар 11.21-12.9; Мц 16.13-19";
             }
             post = false;
             postBild = "0";
@@ -856,9 +856,9 @@ void CreateCalindar::generateCaliandar()
         if (DayYear == i3) {
             sviaty = "АДСЯЧЭНЬНЕ ГАЛАВЫ СЬВ. ЯНА ПРАДВЕСЬНІКА І ХРЫСЬЦІЦЕЛЯ";
             if (Nedel == CreateCalindar::SUNDAY && !sviatyaChtenia.isEmpty()) {
-                cytanneDop = "На ютрані: Мц 14.1-13;\nДз 13.25-32; Мк 6.14-30";
+                cytanneDop = "На ютрані: Мц 14.1-13\nДз 13.25-32; Мк 6.14-30";
             } else {
-                sviatyaChtenia = "На ютрані: Мц 14.1-13;\nДз 13.25-32; Мк 6.14-30";
+                sviatyaChtenia = "На ютрані: Мц 14.1-13\nДз 13.25-32; Мк 6.14-30";
             }
             sviatyDay = "2";
             //tipicon = "2";
@@ -868,9 +868,9 @@ void CreateCalindar::generateCaliandar()
         if (DayYear == i3) {
             sviaty = "ПОКРЫВА НАЙСЬВЯЦЕЙШАЙ БАГАРОДЗІЦЫ";
             if (Nedel == CreateCalindar::SUNDAY && !sviatyaChtenia.isEmpty()) {
-                cytanneDop = "На ютрані: Лк 1.39-49, 56;\nГаб 9.1-7; Лк 10.38-42, 11.27-28";
+                cytanneDop = "На ютрані: Лк 1.39-49, 56\nГаб 9.1-7; Лк 10.38-42, 11.27-28";
             } else {
-                sviatyaChtenia = "На ютрані: Лк 1.39-49, 56;\nГаб 9.1-7; Лк 10.38-42, 11.27-28";
+                sviatyaChtenia = "На ютрані: Лк 1.39-49, 56\nГаб 9.1-7; Лк 10.38-42, 11.27-28";
             }
             post = false;
             postBild = "0";
@@ -884,7 +884,7 @@ void CreateCalindar::generateCaliandar()
             sviaty = "БОГАЗЬЯЎЛЕНЬНЕ (Вадохрышча)";
             post = false;
             postBild = "0";
-            sviatyaChtenia = "На ютрані: Мк 1.9-11;\nЦіт 2.11-14, 3.4-7; Мц 3.13-17";
+            sviatyaChtenia = "На ютрані: Мк 1.9-11\nЦіт 2.11-14, 3.4-7; Мц 3.13-17";
             sv_per_ch = "На асьвячэньне вады: 1 Кар 10.1-4; Мк 1.9-11";
             sviatyDay = "1";
             //tipicon = "2";
@@ -899,7 +899,7 @@ void CreateCalindar::generateCaliandar()
                 cytanneDop = "Сустрэчы: Габ 7.7-17; Лк 2.22-40";
             } else {
                 sviaty = "СУСТРЭЧА ГОСПАДА НАШАГА ІСУСА ХРЫСТА (ГРАМНІЦЫ)";
-                sviatyaChtenia = "На ютрані: Лк 2.25-32;\nГаб 7.7-17; Лк 2.22-40";
+                sviatyaChtenia = "На ютрані: Лк 2.25-32\nГаб 7.7-17; Лк 2.22-40";
             }
             sviatyDay = "1";
             //tipicon = "2";
@@ -918,10 +918,10 @@ void CreateCalindar::generateCaliandar()
             postBild = "0";
             if (Nedel == CreateCalindar::SUNDAY) {
                 sviaty.append("\n").append("\nДАБРАВЕШЧАНЬНЕ НАЙСЬВЯЦЕЙШАЙ БАГАРОДЗІЦЫ");
-                cytanneDop = "Дабравешчаньне: Тон 8. На ютрані: Лк 1.39-49, 56;\nГаб 9.11-14; Мк 10.32-45;\nГаб 2.11-18; Лк 1.24-38";
+                cytanneDop = "Дабравешчаньне: Тон 8. На ютрані: Лк 1.39-49, 56\nГаб 9.11-14; Мк 10.32-45\nГаб 2.11-18; Лк 1.24-38";
             } else {
                 sviaty = "ДАБРАВЕШЧАНЬНЕ НАЙСЬВЯЦЕЙШАЙ БАГАРОДЗІЦЫ";
-                sviatyaChtenia = "Тон 8. На ютрані: Лк 1.39-49, 56;\nГаб 9.11-14; Мк 10.32-45;\n" + linurgia + " Габ 2.11-18; Лк 1.24-38";
+                sviatyaChtenia = "Тон 8. На ютрані: Лк 1.39-49, 56\nГаб 9.11-14; Мк 10.32-45\n" + linurgia + " Габ 2.11-18; Лк 1.24-38";
             }
             sviatyDay = "1";
             //tipicon = "2";
@@ -932,7 +932,7 @@ void CreateCalindar::generateCaliandar()
             post = false;
             postBild = "0";
             sviaty = "ПЕРАМЯНЕНЬНЕ ГОСПАДА НАШАГА ІСУСА ХРЫСТА";
-            sviatyaChtenia = "На ютрані: Лк 9.28-36;\n2 Пт 1.10-19; Мц 17.1-9";
+            sviatyaChtenia = "На ютрані: Лк 9.28-36\n2 Пт 1.10-19; Мц 17.1-9";
             sviatyDay = "1";
             //tipicon = "2";
         }
@@ -943,9 +943,9 @@ void CreateCalindar::generateCaliandar()
             postBild = "0";
             sviaty = "УСЬПЕНЬНЕ НАЙСЬВЯЦЕЙШАЙ БАГАРОДЗІЦЫ";
             if (Nedel == CreateCalindar::SUNDAY && !sviatyaChtenia.isEmpty()) {
-                cytanneDop = "На ютрані: Лк 1.39-49, 56;\nФлп 2.5-11; Лк 10.38-42, 11.27-28";
+                cytanneDop = "На ютрані: Лк 1.39-49, 56\nФлп 2.5-11; Лк 10.38-42, 11.27-28";
             } else {
-                sviatyaChtenia = "На ютрані: Лк 1.39-49, 56;\nФлп 2.5-11; Лк 10.38-42, 11.27-28";
+                sviatyaChtenia = "На ютрані: Лк 1.39-49, 56\nФлп 2.5-11; Лк 10.38-42, 11.27-28";
             }
             sviatyDay = "1";
             //tipicon = "2";
@@ -957,9 +957,9 @@ void CreateCalindar::generateCaliandar()
             postBild = "0";
             sviaty = "НАРАДЖЭНЬНЕ НАЙСЬВЯЦЕЙШАЙ БАГАРОДЗІЦЫ";
             if (Nedel == CreateCalindar::SUNDAY && !sviatyaChtenia.isEmpty()) {
-                cytanneDop = "На ютрані: Лк 1.39-49, 56;\nФлп 2.5-11; Лк 10.38-42, 11.27-28";
+                cytanneDop = "На ютрані: Лк 1.39-49, 56\nФлп 2.5-11; Лк 10.38-42, 11.27-28";
             } else {
-                sviatyaChtenia = "На ютрані: Лк 1.39-49, 56;\nФлп 2.5-11; Лк 10.38-42, 11.27-28";
+                sviatyaChtenia = "На ютрані: Лк 1.39-49, 56\nФлп 2.5-11; Лк 10.38-42, 11.27-28";
             }
             sviatyDay = "1";
             //tipicon = "2";
@@ -968,7 +968,7 @@ void CreateCalindar::generateCaliandar()
         i3 = calendar_pasha.dayOfYear() - 1;
         if (DayYear == i3) {
             sviaty = "УЗВЫШЭНЬНЕ ПАЧЭСНАГА І ЖЫЦЬЦЯДАЙНАГА КРЫЖА";
-            sviatyaChtenia = "На ютрані: Ян 12.28-36;\n1 Кар 1.18-24; Ян 19.6-11, 13-20, 25-28, 30-35";
+            sviatyaChtenia = "На ютрані: Ян 12.28-36\n1 Кар 1.18-24; Ян 19.6-11, 13-20, 25-28, 30-35";
             sviatyDay = "1";
             //tipicon = "2";
         }
@@ -979,9 +979,9 @@ void CreateCalindar::generateCaliandar()
             postBild = "0";
             sviaty = "УВАХОД У ХРАМ НАЙСЬВЯЦЕЙШАЙ БАГАРОДЗІЦЫ";
             if (Nedel == CreateCalindar::SUNDAY && !sviatyaChtenia.isEmpty()) {
-                cytanneDop = "На ютрані: Лк 1.39-49, 56;\nГаб 9.1-7; Лк 10.38-42, 11.27-28";
+                cytanneDop = "На ютрані: Лк 1.39-49, 56\nГаб 9.1-7; Лк 10.38-42, 11.27-28";
             } else {
-                sviatyaChtenia = "На ютрані: Лк 1.39-49, 56;\nГаб 9.1-7; Лк 10.38-42, 11.27-28";
+                sviatyaChtenia = "На ютрані: Лк 1.39-49, 56\nГаб 9.1-7; Лк 10.38-42, 11.27-28";
             }
             sviatyDay = "1";
             //tipicon = "2";
@@ -992,7 +992,7 @@ void CreateCalindar::generateCaliandar()
             post = false;
             postBild = "0";
             sviaty = "НАРАДЖЭНЬНЕ ГОСПАДА НАШАГА ІСУСА ХРЫСТА (РАСТВО)";
-            sviatyaChtenia = "На ютрані: Мц 1.18-25;\nГал 4.4-7; Мц 2.1-12";
+            sviatyaChtenia = "На ютрані: Мц 1.18-25\nГал 4.4-7; Мц 2.1-12";
             sviatyDay = "1";
             //tipicon = "2";
         }

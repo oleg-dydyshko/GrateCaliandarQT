@@ -68,6 +68,9 @@
     </property>
    </widget>
    <widget class="QCheckBox" name="checkBox_1">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>6</x>
@@ -80,7 +83,7 @@
      <string>Запампаваць файлы з сайта</string>
     </property>
     <property name="checked">
-     <bool>true</bool>
+     <bool>false</bool>
     </property>
    </widget>
    <widget class="QCheckBox" name="checkBox_2">
@@ -99,7 +102,7 @@
      <string>Рэзервовае капіяваньне файлаў сайта</string>
     </property>
     <property name="checked">
-     <bool>true</bool>
+     <bool>false</bool>
     </property>
    </widget>
    <widget class="QWidget" name="layoutWidget">
