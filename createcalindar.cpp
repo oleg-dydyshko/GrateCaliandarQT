@@ -401,7 +401,7 @@ void CreateCalindar::generateCaliandar()
             int dayofweek = pasha.dayOfWeek();
             if (DayYear == pasha.dayOfYear() - 1 && CreateCalindar::SUNDAY == dayofweek) {
                 predsviaty = "<strong>Нядзеля перад Крыжаўзвышэньнем</strong>";
-                //sv_per_ch = "Нядз.: Гал 6.11-18; Ян 3.13-17";
+                sv_per_ch = "Нядз.: Гал 6.11-18; Ян 3.13-17";
             }
         }
         for (int i = 15; i <= 21; i++) {
@@ -599,7 +599,7 @@ void CreateCalindar::generateCaliandar()
         if (DayYear == pasha.addDays(-23).dayOfYear()) {
             predsviaty = "<em>Бацькоўская (задушная) субота</em>";
             pameplyia = "1";
-            sv_per_ch = "Пам.: 1 Кар 15.47-57; Ян 5.24-30";
+            sv_per_ch = "Пам.: 1 Сал 4.13-17; Ян 5.24-30";
         }
         //pasha.setDate(year, month_p, data_p);
         if (DayYear == pasha.addDays(47).dayOfYear()) {
@@ -921,7 +921,7 @@ void CreateCalindar::generateCaliandar()
                 cytanneDop = "Дабравешчаньне: Тон 8. На ютрані: Лк 1.39-49, 56\nГаб 9.11-14; Мк 10.32-45\nГаб 2.11-18; Лк 1.24-38";
             } else {
                 sviaty = "ДАБРАВЕШЧАНЬНЕ НАЙСЬВЯЦЕЙШАЙ БАГАРОДЗІЦЫ";
-                sviatyaChtenia = "Тон 8. На ютрані: Лк 1.39-49, 56\nГаб 9.11-14; Мк 10.32-45\n" + linurgia + " Габ 2.11-18; Лк 1.24-38";
+                sviatyaChtenia = "Тон 8. На ютрані: Лк 1.39-49, 56\nБыц 9.8-17; Высл 12.8-22; Вых 3.1-8; Прып 8.22-30\n" + linurgia + " Габ 2.11-18; Лк 1.24-38";
             }
             sviatyDay = "1";
             //tipicon = "2";
