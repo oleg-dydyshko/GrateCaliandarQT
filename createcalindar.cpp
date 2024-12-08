@@ -347,10 +347,6 @@ void CreateCalindar::generateCaliandar()
         if (DayYear == pasha.dayOfYear() - 1) {
             predsviaty = "<em>Перадсьвяцьце Ўваходу ў Храм Найсьвяцейшай Багародзіцы</em>";
         }
-        pasha.setDate(year, CreateCalindar::DECEMBER, 8);
-        if (DayYear == pasha.dayOfYear() - 1) {
-            predsviaty = "<em>Перадсьвяцьце Зачацьця праведнай Ганны</em>";
-        }
         pasha.setDate(year, CreateCalindar::NOVEMBER, 25);
         if (DayYear == pasha.dayOfYear() - 1) {
             predsviaty = "<em>Адданьне сьвята Ўваходу ў Храм Багародзіцы</em>";
@@ -2041,7 +2037,10 @@ void CreateCalindar::sviatyia(int Year) {
                 sabytiePKC = "Успамін усіх памерлых вернікаў\n(паводле календара РКЦ)";
             }
             pkc.setDate(year, CreateCalindar::DECEMBER, 8);
-            if (pkc.dayOfYear() == DayYear) {
+            int bezzag = 0;
+            if (pkc.dayOfWeek() == CreateCalindar::SUNDAY)
+                bezzag = 1;
+            if (pkc.addDays(bezzag).dayOfYear() == DayYear) {
                 sabytiePKC = "Беззаганнага Зачацьця Найсьвяцейшай Панны Марыі\n(паводле календара РКЦ)";
             }
             pkc.setDate(year, CreateCalindar::DECEMBER, 25);
