@@ -736,8 +736,14 @@ void CreateCalindar::generateCaliandar()
         if (bogaziaulenneNed == CreateCalindar::SUNDAY) {
             bogaziaulenne = bogaziaulenne - 2;
         }
+        if (AdsiachenneGalavyNed == CreateCalindar::SATURDAY) {
+            AdsiachenneGalavy = AdsiachenneGalavy - 1;
+        }
         if (AdsiachenneGalavyNed == CreateCalindar::SUNDAY) {
             AdsiachenneGalavy = AdsiachenneGalavy - 2;
+        }
+        if (KrygaUzvyshenneNed == CreateCalindar::SATURDAY) {
+            KrygaUzvyshenne = KrygaUzvyshenne - 1;
         }
         if (KrygaUzvyshenneNed == CreateCalindar::SUNDAY) {
             KrygaUzvyshenne = KrygaUzvyshenne - 2;
