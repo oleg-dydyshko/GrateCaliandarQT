@@ -1984,15 +1984,17 @@ void CreateCalindar::sviatyia(int Year) {
             }
             QDate pkc(year, CreateCalindar::JANUARY, 1);
             if (pkc.dayOfYear() == DayYear) {
-                sabytiePKC = "Сьвятой Багародзіцы Марыі\n(паводле календара РКЦ)";
+                sabytiePKC = "Сьвятой Багародзіцы Марыі\n(абавязковае паводле календара РКЦ)";
             }
             pkc.setDate(year, CreateCalindar::JANUARY, 6);
             if (pkc.dayOfYear() == DayYear) {
-                sabytiePKC = "Аб’яўленьне Пана (Тры Каралі)\n(паводле календара РКЦ)";
+                sabytiePKC = "Аб’яўленьне Пана (Тры Каралі)\n(абавязковае паводле календара РКЦ)";
             }
-            pkc.setDate(year, CreateCalindar::JANUARY, 7);
-            if (pkc.dayOfYear() == DayYear) {
-                sabytiePKC = "Хрост Пана\n(паводле календара РКЦ)";
+            for (int i = 1; i <= 7; i++) {
+                if (pkc.addDays(i).dayOfWeek() == CreateCalindar::SUNDAY && pkc.addDays(i).dayOfYear() == DayYear) {
+                    sabytiePKC = "Хрост Пана\n(абавязковае паводле календара РКЦ)";
+                    break;
+                }
             }
             pkc.setDate(year, CreateCalindar::FEBRUARY, 2);
             if (pkc.dayOfYear() == DayYear) {
@@ -2004,11 +2006,11 @@ void CreateCalindar::sviatyia(int Year) {
                 uzaf = 1;
             }
             if (pkc.addDays(uzaf).dayOfYear() == DayYear) {
-                sabytiePKC = "Сьвятога Юзафа\n(паводле календара РКЦ)";
+                sabytiePKC = "Сьвятога Юзафа\n(абавязковае паводле календара РКЦ)";
             }
             pkc.setDate(year, CreateCalindar::JUNE, 29);
             if (pkc.dayOfYear() == DayYear) {
-                sabytiePKC = "Сьвятых апосталаў Пятра і Паўла\n(паводле календара РКЦ)";
+                sabytiePKC = "Сьвятых апосталаў Пятра і Паўла\n(абавязковае паводле календара РКЦ)";
             }
             pkc.setDate(year, CreateCalindar::JULY, 2);
             if (pkc.dayOfYear() == DayYear) {
@@ -2020,7 +2022,7 @@ void CreateCalindar::sviatyia(int Year) {
             }
             pkc.setDate(year, CreateCalindar::AUGUST, 15);
             if (pkc.dayOfYear() == DayYear) {
-                sabytiePKC = "Унебаўзяцьце Найсьвяцейшай Панны Марыі\n(паводле календара РКЦ)";
+                sabytiePKC = "Унебаўзяцьце Найсьвяцейшай Панны Марыі\n(абавязковае паводле календара РКЦ)";
             }
             pkc.setDate(year, CreateCalindar::SEPTEMBER, 8);
             if (pkc.dayOfYear() == DayYear) {
@@ -2036,7 +2038,7 @@ void CreateCalindar::sviatyia(int Year) {
             }
             pkc.setDate(year, CreateCalindar::NOVEMBER, 1);
             if (pkc.dayOfYear() == DayYear) {
-                sabytiePKC = "Усіх Сьвятых\n(паводле календара РКЦ)";
+                sabytiePKC = "Усіх Сьвятых\n(абавязковае паводле календара РКЦ)";
             }
             pkc.setDate(year, CreateCalindar::NOVEMBER, 2);
             if (pkc.dayOfYear() == DayYear) {
@@ -2047,11 +2049,11 @@ void CreateCalindar::sviatyia(int Year) {
             if (pkc.dayOfWeek() == CreateCalindar::SUNDAY)
                 bezzag = 1;
             if (pkc.addDays(bezzag).dayOfYear() == DayYear) {
-                sabytiePKC = "Беззаганнага Зачацьця Найсьвяцейшай Панны Марыі\n(паводле календара РКЦ)";
+                sabytiePKC = "Беззаганнага Зачацьця Найсьвяцейшай Панны Марыі\n(абавязковае паводле календара РКЦ)";
             }
             pkc.setDate(year, CreateCalindar::DECEMBER, 25);
             if (pkc.dayOfYear() == DayYear) {
-                sabytiePKC = "Нараджэньне Пана\n(паводле календара РКЦ)";
+                sabytiePKC = "Нараджэньне Пана\n(абавязковае паводле календара РКЦ)";
             }
             pkc.setDate(year, month_p, data_p);
             if (pkc.addDays(-46).dayOfYear() == DayYear) {
@@ -2059,7 +2061,7 @@ void CreateCalindar::sviatyia(int Year) {
             }
             pkc.setDate(year, month_p, data_p);
             int nachPalNed = pkc.addDays(-7).dayOfYear();
-            int konPalNed = pkc.addDays(-7 + 14).dayOfYear();
+            int konPalNed = pkc.addDays(7).dayOfYear();
             pkc.setDate(year, CreateCalindar::MARCH, 25);
             bool perenos = false;
             for (int i = nachPalNed; i < konPalNed; i++) {
@@ -2077,26 +2079,39 @@ void CreateCalindar::sviatyia(int Year) {
                 }
             }
             if (nachPalNed == DayYear) {
-                sabytiePKC = "Пальмовая нядзеля\n(паводле календара РКЦ)";
+                sabytiePKC = "Пальмовая нядзеля\n(абавязковае паводле календара РКЦ)";
             }
             pkc.setDate(year, month_p, data_p);
+            if (pkc.addDays(-3).dayOfYear() == DayYear) {
+                sabytiePKC = "Вялікі чацвер\n(паводле календара РКЦ)";
+            }
+            if (pkc.addDays(-2).dayOfYear() == DayYear) {
+                sabytiePKC = "Вялікая пятніца\n(паводле календара РКЦ)";
+            }
+            if (pkc.addDays(-1).dayOfYear() == DayYear) {
+                sabytiePKC = "Вялікая субота\n(паводле календара РКЦ)";
+            }
             if (pkc.dayOfYear() == DayYear) {
-                sabytiePKC = "Уваскрасеньне Пана (Вялікдзень)\n(паводле календара РКЦ)";
+                sabytiePKC = "Уваскрасеньне Пана (Вялікдзень)\n(абавязковае паводле календара РКЦ)";
             }
             if (konPalNed == DayYear) {
-                sabytiePKC = "Божай Міласэрнасьці\n(паводле календара РКЦ)";
+                sabytiePKC = "Божай Міласэрнасьці\n(абавязковае паводле календара РКЦ)";
             }
             pkc.setDate(year, month_p, data_p);
             if (pkc.addDays(39).dayOfYear() == DayYear) {
-                sabytiePKC = "Унебаўшэсьце Пана\n(паводле календара РКЦ)";
+                sabytiePKC = "Унебаўшэсьце Пана\n(абавязковае паводле календара РКЦ)";
             }
             pkc.setDate(year, month_p, data_p);
             if (pkc.addDays(49).dayOfYear() == DayYear) {
-                sabytiePKC = "Спасланьне Духа Сьвятога\n(паводле календара РКЦ)";
+                sabytiePKC = "Спасланьне Духа Сьвятога\n(абавязковае паводле календара РКЦ)";
+            }
+            pkc.setDate(year, month_p, data_p);
+            if (pkc.addDays(53).dayOfYear() == DayYear) {
+                sabytiePKC = "Пана нашага Езуса Хрыста, Найвышэйшага і Вечнага Святара\n(паводле календара РКЦ)";
             }
             pkc.setDate(year, month_p, data_p);
             if (pkc.addDays(60).dayOfYear() == DayYear) {
-                sabytiePKC = "Найсьвяцейшага Цела і Крыві Хрыста (Божага Цела)\n(паводле календара РКЦ)";
+                sabytiePKC = "Найсьвяцейшага Цела і Крыві Хрыста (Божага Цела)\n(абавязковае паводле календара РКЦ)";
             }
             if (pkc.addDays(60 + 8).dayOfYear() == DayYear) {
                 sabytiePKC = "Найсьвяцейшага Сэрца Езуса\n(паводле календара РКЦ)";
@@ -2112,7 +2127,7 @@ void CreateCalindar::sviatyia(int Year) {
             }
             pkc.setDate(year, month_p, data_p);
             if (pkc.addDays(56).dayOfYear() == DayYear) {
-                sabytiePKC = "Найсьвяцейшай Тройцы\n(паводле календара РКЦ)";
+                sabytiePKC = "Найсьвяцейшай Тройцы\n(абавязковае паводле календара РКЦ)";
             }
             pkc.setDate(year, CreateCalindar::DECEMBER, 25);
             int count = 0;
@@ -2133,7 +2148,7 @@ void CreateCalindar::sviatyia(int Year) {
             for (int i = 50; i > 0; i--) {
                 if (count2 == 5) {
                     if (pkc.addDays(dayToAdvent).dayOfYear() == DayYear && pkc.addDays(dayToAdvent).dayOfWeek() == CreateCalindar::SUNDAY) {
-                        sabytiePKC = "Хрыста — Валадара Сусьвету\n(паводле календара РКЦ)";
+                        sabytiePKC = "Хрыста — Валадара Сусьвету\n(абавязковае паводле календара РКЦ)";
                         break;
                     }
                 }
@@ -2143,7 +2158,7 @@ void CreateCalindar::sviatyia(int Year) {
             pkc.setDate(year, CreateCalindar::DECEMBER, 25);
             if (pkc.dayOfWeek() == CreateCalindar::SUNDAY) {
                 if (pkc.addDays(5).dayOfYear() == DayYear) {
-                    sabytiePKC = "Сьвятой Сям’і\n(паводле календара РКЦ)";
+                    sabytiePKC = "Сьвятой Сям’і\n(абавязковае паводле календара РКЦ)";
                 }
             } else {
                 pkc.setDate(year, CreateCalindar::DECEMBER, 26);
@@ -2151,7 +2166,7 @@ void CreateCalindar::sviatyia(int Year) {
                 for (int i = 0; i < 6; i++) {
                     if (pkc.addDays(dayToAdvent).dayOfWeek() == CreateCalindar::SUNDAY) {
                         if (pkc.addDays(dayToAdvent).dayOfYear() == DayYear) {
-                            sabytiePKC = "Сьвятой Сям’і\n(паводле календара РКЦ)";
+                            sabytiePKC = "Сьвятой Сям’і\n(абавязковае паводле календара РКЦ)";
                             break;
                         }
                     }
