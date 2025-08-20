@@ -25,7 +25,7 @@ void CreateCalindar::generate()
     QDir dirs(dirName);
     if (!dirs.exists()) {
         carkvaPatch = "/home/oleg/www/carkva";
-        malitounikPatch = "/home/oleg/AndroidStudioProjects/Malitounik";
+        malitounikPatch = "/home/oleg/AndroidStudioProjects/malitounik";
     } else {
         QByteArray array;
         QString fileName = dirName + "/settings.json";
@@ -83,7 +83,7 @@ void CreateCalindar::generateCaliandar()
         QString sviaty = "";
         QString sviatyDay = "0";
         QString pameplyia = "0";
-        QString sviatyiaName = "no_sviatyia";
+        QString sviatyiaName = "";
         QString cytanneSV = "";
         int year = c2.year();
         int Nedel = c2.dayOfWeek();
@@ -246,6 +246,7 @@ void CreateCalindar::generateCaliandar()
         QDate rog;
         QList<int> rogdestvo = {11, 12, 13, 14, 15, 16, 17};
         QList<int> rogdestvo2 = {18, 19, 20, 21, 22, 23, 24};
+        QList<int> rogdestvo3 = {26, 27, 28, 29, 30, 31};
         for (int aMay1 : rogdestvo) {
             rog.setDate(year, CreateCalindar::DECEMBER, aMay1);
             int wik = rog.dayOfWeek();
@@ -260,7 +261,22 @@ void CreateCalindar::generateCaliandar()
             int wik = rog.dayOfWeek();
             if (wik == CreateCalindar::SUNDAY) {
                 if (rog.dayOfYear() - 1 == DayYear) {
-                    sviaty.append(". Сьвятых айцоў");
+                    sviaty.append(", перад Раством. Сьвятых айцоў");
+                }
+            }
+        }
+        rog.setDate(year, CreateCalindar::JANUARY, 1);
+        if (rog.dayOfWeek() == CreateCalindar::SUNDAY) {
+            if (rog.dayOfYear() - 1 == DayYear) {
+                sviaty.append(", пасьля Раства");
+            }
+        }
+        for (int aMay1 : rogdestvo3) {
+            rog.setDate(year, CreateCalindar::DECEMBER, aMay1);
+            int wik = rog.dayOfWeek();
+            if (wik == CreateCalindar::SUNDAY) {
+                if (rog.dayOfYear() - 1 == DayYear) {
+                    sviaty.append(", пасьля Раства");
                 }
             }
         }
@@ -513,7 +529,7 @@ void CreateCalindar::generateCaliandar()
             QString br = "";
             if (sv_per != "")
                 br = "<br>";
-            sv_per.append(br).append("Вялебнай Марыі Ягіпецкай");
+            //sv_per.append(br).append("Вялебнай Марыі Ягіпецкай");
             sv_per_ch = "Вялеб.: Гал 3.23-29; Лк 7.36-50";
         }
         pasha.setDate(year, CreateCalindar::FEBRUARY, 28);
@@ -813,9 +829,9 @@ void CreateCalindar::generateCaliandar()
         QDate calendar_pasha(year, CreateCalindar::JANUARY, 1);
         int i3 = calendar_pasha.dayOfYear() - 1;
         if (DayYear == i3) {
-            if (Nedel == CreateCalindar::SUNDAY && !sviatyaChtenia.isEmpty()) {
+            if (calendar_pasha.dayOfWeek() == CreateCalindar::SUNDAY && !sviatyaChtenia.isEmpty()) {
                 cytanneDop = "Абр: Кал 2.8-12; Лк 2.20-21, 40-52";
-                sviaty = "<strong>" + sviaty + "</strong>\nАБРЭЗАНЬНЕ ГАСПОДНЯЕ";
+                sviaty.append("\n").append("АБРЭЗАНЬНЕ ГАСПОДНЯЕ");
             } else {
                 sviatyaChtenia = "На ютрані: Ян 10.9-16\nКал 2.8-12; Лк 2.20-21, 40-52";
                 sviaty = "АБРЭЗАНЬНЕ ГАСПОДНЯЕ";
@@ -828,8 +844,12 @@ void CreateCalindar::generateCaliandar()
         calendar_pasha.setDate(year, CreateCalindar::JUNE, 24);
         i3 = calendar_pasha.dayOfYear() - 1;
         if (DayYear == i3) {
-            sviaty = "НАРАДЖЭНЬНЕ СЬВ. ЯНА ПРАДВЕСЬНІКА І ХРЫСЬЦІЦЕЛЯ ГАСПОДНЯГА";
-            if (Nedel == CreateCalindar::SUNDAY && !sviatyaChtenia.isEmpty()) {
+            if (calendar_pasha.dayOfWeek() == CreateCalindar::SUNDAY && !sviaty.isEmpty()) {
+                sviaty.append("\n").append("НАРАДЖЭНЬНЕ СЬВ. ЯНА ПРАДВЕСЬНІКА І ХРЫСЬЦІЦЕЛЯ ГАСПОДНЯГА");
+            } else {
+                sviaty = "НАРАДЖЭНЬНЕ СЬВ. ЯНА ПРАДВЕСЬНІКА І ХРЫСЬЦІЦЕЛЯ ГАСПОДНЯГА";
+            }
+            if (calendar_pasha.dayOfWeek() == CreateCalindar::SUNDAY && !sviatyaChtenia.isEmpty()) {
                 cytanneDop = "На ютрані: Лк 1.24-25, 57-68, 76, 80\nРым 13.12-14.4; Лк 1.5-25, 57-68, 76, 80";
             } else {
                 sviatyaChtenia = "На ютрані: Лк 1.24-25, 57-68, 76, 80\nРым 13.12-14.4; Лк 1.5-25, 57-68, 76, 80";
@@ -842,8 +862,12 @@ void CreateCalindar::generateCaliandar()
         calendar_pasha.setDate(year, CreateCalindar::JUNE, 29);
         i3 = calendar_pasha.dayOfYear() - 1;
         if (DayYear == i3) {
-            sviaty = "СЬВЯТЫХ СЛАЎНЫХ І ЎСЯХВАЛЬНЫХ ВЯРХОЎНЫХ АПОСТАЛАЎ ПЯТРА І ПАЎЛА";
-            if (Nedel == CreateCalindar::SUNDAY && !sviatyaChtenia.isEmpty()) {
+            if (calendar_pasha.dayOfWeek() == CreateCalindar::SUNDAY && !sviaty.isEmpty()) {
+                sviaty.append("\n").append("СЬВЯТЫХ СЛАЎНЫХ І ЎСЯХВАЛЬНЫХ ВЯРХОЎНЫХ АПОСТАЛАЎ ПЯТРА І ПАЎЛА");
+            } else {
+                sviaty = "СЬВЯТЫХ СЛАЎНЫХ І ЎСЯХВАЛЬНЫХ ВЯРХОЎНЫХ АПОСТАЛАЎ ПЯТРА І ПАЎЛА";
+            }
+            if (calendar_pasha.dayOfWeek() == CreateCalindar::SUNDAY && !sviatyaChtenia.isEmpty()) {
                 cytanneDop = "На ютрані: Ян 21.15-25\n2 Кар 11.21-12.9; Мц 16.13-19";
             } else {
                 sviatyaChtenia = "На ютрані: Ян 21.15-25\n2 Кар 11.21-12.9; Мц 16.13-19";
@@ -856,8 +880,12 @@ void CreateCalindar::generateCaliandar()
         calendar_pasha.setDate(year, CreateCalindar::AUGUST, 29);
         i3 = calendar_pasha.dayOfYear() - 1;
         if (DayYear == i3) {
-            sviaty = "АДСЯЧЭНЬНЕ ГАЛАВЫ СЬВ. ЯНА ПРАДВЕСЬНІКА І ХРЫСЬЦІЦЕЛЯ";
-            if (Nedel == CreateCalindar::SUNDAY && !sviatyaChtenia.isEmpty()) {
+            if (calendar_pasha.dayOfWeek() == CreateCalindar::SUNDAY && !sviaty.isEmpty()) {
+                sviaty.append("\n").append("АДСЯЧЭНЬНЕ ГАЛАВЫ СЬВ. ЯНА ПРАДВЕСЬНІКА І ХРЫСЬЦІЦЕЛЯ");
+            } else {
+                sviaty = "АДСЯЧЭНЬНЕ ГАЛАВЫ СЬВ. ЯНА ПРАДВЕСЬНІКА І ХРЫСЬЦІЦЕЛЯ";
+            }
+            if (calendar_pasha.dayOfWeek() == CreateCalindar::SUNDAY && !sviatyaChtenia.isEmpty()) {
                 cytanneDop = "На ютрані: Мц 14.1-13\nДз 13.25-32; Мк 6.14-30";
             } else {
                 sviatyaChtenia = "На ютрані: Мц 14.1-13\nДз 13.25-32; Мк 6.14-30";
@@ -868,8 +896,12 @@ void CreateCalindar::generateCaliandar()
         calendar_pasha.setDate(year, CreateCalindar::OCTOBER, 1);
         i3 = calendar_pasha.dayOfYear() - 1;
         if (DayYear == i3) {
-            sviaty = "ПОКРЫВА НАЙСЬВЯЦЕЙШАЙ БАГАРОДЗІЦЫ";
-            if (Nedel == CreateCalindar::SUNDAY && !sviatyaChtenia.isEmpty()) {
+            if (calendar_pasha.dayOfWeek() == CreateCalindar::SUNDAY && !sviaty.isEmpty()) {
+                sviaty.append("\n").append("ПОКРЫВА НАЙСЬВЯЦЕЙШАЙ БАГАРОДЗІЦЫ");
+            } else {
+                sviaty = "ПОКРЫВА НАЙСЬВЯЦЕЙШАЙ БАГАРОДЗІЦЫ";
+            }
+            if (calendar_pasha.dayOfWeek() == CreateCalindar::SUNDAY && !sviatyaChtenia.isEmpty()) {
                 cytanneDop = "На ютрані: Лк 1.39-49, 56\nГаб 9.1-7; Лк 10.38-42, 11.27-28";
             } else {
                 sviatyaChtenia = "На ютрані: Лк 1.39-49, 56\nГаб 9.1-7; Лк 10.38-42, 11.27-28";
@@ -883,7 +915,11 @@ void CreateCalindar::generateCaliandar()
         calendar_pasha.setDate(year, CreateCalindar::JANUARY, 6);
         i3 = calendar_pasha.dayOfYear() - 1;
         if (DayYear == i3) {
-            sviaty = "БОГАЗЬЯЎЛЕНЬНЕ (Вадохрышча)";
+            if (calendar_pasha.dayOfWeek() == CreateCalindar::SUNDAY && !sviaty.isEmpty()) {
+                sviaty.append("\n").append("БОГАЗЬЯЎЛЕНЬНЕ (Вадохрышча)");
+            } else {
+                sviaty = "БОГАЗЬЯЎЛЕНЬНЕ (Вадохрышча)";
+            }
             post = false;
             postBild = "0";
             sviatyaChtenia = "На ютрані: Мк 1.9-11\nЦіт 2.11-14, 3.4-7; Мц 3.13-17";
@@ -896,8 +932,8 @@ void CreateCalindar::generateCaliandar()
         if (DayYear == i3) {
             post = false;
             postBild = "0";
-            if (calendar_pasha.dayOfWeek() == CreateCalindar::SUNDAY) {
-                sviaty.append("\n").append("\nСУСТРЭЧА ГОСПАДА НАШАГА ІСУСА ХРЫСТА (ГРАМНІЦЫ)");
+            if (calendar_pasha.dayOfWeek() == CreateCalindar::SUNDAY && !sviaty.isEmpty()) {
+                sviaty.append("\n").append("СУСТРЭЧА ГОСПАДА НАШАГА ІСУСА ХРЫСТА (ГРАМНІЦЫ)");
                 cytanneDop = "Сустрэчы: Габ 7.7-17; Лк 2.22-40";
             } else {
                 sviaty = "СУСТРЭЧА ГОСПАДА НАШАГА ІСУСА ХРЫСТА (ГРАМНІЦЫ)";
@@ -918,12 +954,12 @@ void CreateCalindar::generateCaliandar()
             else if (bagar <= CreateCalindar::FRIDAY) linurgia = "Літургія сьв. Яна Залатавуснага з вячэрняй";
             post = false;
             postBild = "0";
-            if (Nedel == CreateCalindar::SUNDAY) {
+            if (calendar_pasha.dayOfWeek() == CreateCalindar::SUNDAY && !sviaty.isEmpty()) {
                 sviaty.append("\n").append("\nДАБРАВЕШЧАНЬНЕ НАЙСЬВЯЦЕЙШАЙ БАГАРОДЗІЦЫ");
                 cytanneDop = "Дабравешчаньне: Тон 8. На ютрані: Лк 1.39-49, 56\nГаб 9.11-14; Мк 10.32-45\nГаб 2.11-18; Лк 1.24-38";
             } else {
                 sviaty = "ДАБРАВЕШЧАНЬНЕ НАЙСЬВЯЦЕЙШАЙ БАГАРОДЗІЦЫ";
-                sviatyaChtenia = "Тон 8. На ютрані: Лк 1.39-49, 56\nБыц 9.8-17; Высл 12.8-22; Вых 3.1-8; Прып 8.22-30\n" + linurgia + " Габ 2.11-18; Лк 1.24-38";
+                sviatyaChtenia = "Тон 8. На ютрані: Лк 1.39-49, 56\nБыц 43.26-31; Высл 21.23-22.4; Вых 3.1-8; Прып 8.22-30\n" + linurgia + " Габ 2.11-18; Лк 1.24-38";
             }
             sviatyDay = "1";
             //tipicon = "2";
@@ -933,7 +969,11 @@ void CreateCalindar::generateCaliandar()
         if (DayYear == i3) {
             post = false;
             postBild = "0";
-            sviaty = "ПЕРАМЯНЕНЬНЕ ГОСПАДА НАШАГА ІСУСА ХРЫСТА";
+            if (calendar_pasha.dayOfWeek() == CreateCalindar::SUNDAY && !sviaty.isEmpty()) {
+                sviaty.append("\n").append("ПЕРАМЯНЕНЬНЕ ГОСПАДА НАШАГА ІСУСА ХРЫСТА");
+            } else {
+                sviaty = "ПЕРАМЯНЕНЬНЕ ГОСПАДА НАШАГА ІСУСА ХРЫСТА";
+            }
             sviatyaChtenia = "На ютрані: Лк 9.28-36\n2 Пт 1.10-19; Мц 17.1-9";
             sviatyDay = "1";
             //tipicon = "2";
@@ -943,7 +983,11 @@ void CreateCalindar::generateCaliandar()
         if (DayYear == i3) {
             post = false;
             postBild = "0";
-            sviaty = "УСЬПЕНЬНЕ НАЙСЬВЯЦЕЙШАЙ БАГАРОДЗІЦЫ";
+            if (calendar_pasha.dayOfWeek() == CreateCalindar::SUNDAY && !sviaty.isEmpty()) {
+                sviaty.append("\n").append("УСЬПЕНЬНЕ НАЙСЬВЯЦЕЙШАЙ БАГАРОДЗІЦЫ");
+            } else {
+                sviaty = "УСЬПЕНЬНЕ НАЙСЬВЯЦЕЙШАЙ БАГАРОДЗІЦЫ";
+            }
             if (Nedel == CreateCalindar::SUNDAY && !sviatyaChtenia.isEmpty()) {
                 cytanneDop = "На ютрані: Лк 1.39-49, 56\nФлп 2.5-11; Лк 10.38-42, 11.27-28";
             } else {
@@ -957,7 +1001,11 @@ void CreateCalindar::generateCaliandar()
         if (DayYear == i3) {
             post = false;
             postBild = "0";
-            sviaty = "НАРАДЖЭНЬНЕ НАЙСЬВЯЦЕЙШАЙ БАГАРОДЗІЦЫ";
+            if (calendar_pasha.dayOfWeek() == CreateCalindar::SUNDAY && !sviaty.isEmpty()) {
+                sviaty.append("\n").append("НАРАДЖЭНЬНЕ НАЙСЬВЯЦЕЙШАЙ БАГАРОДЗІЦЫ");
+            } else {
+                sviaty = "НАРАДЖЭНЬНЕ НАЙСЬВЯЦЕЙШАЙ БАГАРОДЗІЦЫ";
+            }
             if (Nedel == CreateCalindar::SUNDAY && !sviatyaChtenia.isEmpty()) {
                 cytanneDop = "На ютрані: Лк 1.39-49, 56\nФлп 2.5-11; Лк 10.38-42, 11.27-28";
             } else {
@@ -969,7 +1017,11 @@ void CreateCalindar::generateCaliandar()
         calendar_pasha.setDate(year, CreateCalindar::SEPTEMBER, 14);
         i3 = calendar_pasha.dayOfYear() - 1;
         if (DayYear == i3) {
-            sviaty = "УЗВЫШЭНЬНЕ ПАЧЭСНАГА І ЖЫЦЬЦЯДАЙНАГА КРЫЖА";
+            if (calendar_pasha.dayOfWeek() == CreateCalindar::SUNDAY && !sviaty.isEmpty()) {
+                sviaty.append("\n").append("УЗВЫШЭНЬНЕ ПАЧЭСНАГА І ЖЫЦЬЦЯДАЙНАГА КРЫЖА");
+            } else {
+                sviaty = "УЗВЫШЭНЬНЕ ПАЧЭСНАГА І ЖЫЦЬЦЯДАЙНАГА КРЫЖА";
+            }
             sviatyaChtenia = "На ютрані: Ян 12.28-36\n1 Кар 1.18-24; Ян 19.6-11, 13-20, 25-28, 30-35";
             sviatyDay = "1";
             //tipicon = "2";
@@ -979,7 +1031,11 @@ void CreateCalindar::generateCaliandar()
         if (DayYear == i3) {
             post = false;
             postBild = "0";
-            sviaty = "УВАХОД У ХРАМ НАЙСЬВЯЦЕЙШАЙ БАГАРОДЗІЦЫ";
+            if (calendar_pasha.dayOfWeek() == CreateCalindar::SUNDAY && !sviaty.isEmpty()) {
+                sviaty.append("\n").append("УВАХОД У ХРАМ НАЙСЬВЯЦЕЙШАЙ БАГАРОДЗІЦЫ");
+            } else {
+                sviaty = "УВАХОД У ХРАМ НАЙСЬВЯЦЕЙШАЙ БАГАРОДЗІЦЫ";
+            }
             if (Nedel == CreateCalindar::SUNDAY && !sviatyaChtenia.isEmpty()) {
                 cytanneDop = "На ютрані: Лк 1.39-49, 56\nГаб 9.1-7; Лк 10.38-42, 11.27-28";
             } else {
@@ -993,7 +1049,11 @@ void CreateCalindar::generateCaliandar()
         if (DayYear == i3) {
             post = false;
             postBild = "0";
-            sviaty = "НАРАДЖЭНЬНЕ ГОСПАДА НАШАГА ІСУСА ХРЫСТА (РАСТВО)";
+            if (calendar_pasha.dayOfWeek() == CreateCalindar::SUNDAY && !sviaty.isEmpty()) {
+                sviaty.append("\n").append("НАРАДЖЭНЬНЕ ГОСПАДА НАШАГА ІСУСА ХРЫСТА (РАСТВО)");
+            } else {
+                sviaty = "НАРАДЖЭНЬНЕ ГОСПАДА НАШАГА ІСУСА ХРЫСТА (РАСТВО)";
+            }
             sviatyaChtenia = "На ютрані: Мц 1.18-25\nГал 4.4-7; Мц 2.1-12";
             sviatyDay = "1";
             //tipicon = "2";
@@ -1002,7 +1062,7 @@ void CreateCalindar::generateCaliandar()
         calendar_pasha.setDate(year, CreateCalindar::JANUARY, 5);
         i3 = calendar_pasha.dayOfYear() - 1;
         if (DayYear == i3) {
-            if (calendar_pasha.dayOfWeek() == CreateCalindar::SUNDAY) {
+            if (calendar_pasha.dayOfWeek() == CreateCalindar::SUNDAY && !sviaty.isEmpty()) {
                 predsviaty = "СЬВЯТЫ ВЕЧАР ПЕРАД БОГАЗЬЯЎЛЕНЬНЕМ";
             } else {
                 sviaty = "СЬВЯТЫ ВЕЧАР ПЕРАД БОГАЗЬЯЎЛЕНЬНЕМ";
@@ -1040,8 +1100,7 @@ void CreateCalindar::generateCaliandar()
         } else {
             arrayList.append("0"); // обычный день 5
         }
-        if (sviaty != "") arrayList.append(sviaty); // Праздники 6
-        else arrayList.append("no_sviaty"); // нет праздников 6
+        arrayList.append(sviaty); // Праздники 6
         arrayList.append(postBild); // значение поста(0-обычный день, 1-нет поста, 2-пост, 3-строги пост) 7
         arrayList.append(predsviaty); //Предпраздники 8
 
@@ -1082,7 +1141,6 @@ void CreateCalindar::generateCaliandar()
         arrayList.append(profesional(DayYear, year)); // Професиональные праздники 17
         arrayList.append(pameplyia); // Умершие 18
         arrayList.append(sviatyPKC(DayYear, year)); // Римо-каталические праздники 19
-
         if (year == CreateCalindar::outyear) {
             if (DayYear < gc.dayOfYear() || DayYear > 257) {
                 arrayList.append("0"); // Тон в Воскресенье 20
@@ -1221,7 +1279,7 @@ void CreateCalindar::onDownload(QNetworkReply *reply)
             file.close();
         }
         if (getFile.contains("/admin/parafii_bgkc/") || getFile.contains("/chytanne/Semucha/") || getFile.contains("/admin/prynagodnyia/") || getFile.contains("/admin/bogashlugbovya/")) {
-            QString filenameprogram = malitounikPatch + "/resources/src/main/res/raw" + getFile.mid(t1);
+            QString filenameprogram = malitounikPatch + "/malitounik-bgkc/src/main/res/raw" + getFile.mid(t1);
             QFile file(filenameprogram);
             if (file.open(QIODevice::WriteOnly)) {
                 file.write(read);
@@ -1442,7 +1500,7 @@ void CreateCalindar::sviatyia(int Year) {
             paralel = paralel.replace("1 Ин", "1 Ян");
             paralel = paralel.replace("2 Ин", "2 Ян");
             paralel = paralel.replace("3 Ин", "3 Ян");
-            paralel = paralel.replace("Иуд", "Юд");
+            paralel = paralel.replace("Иуды", "Юд");
             paralel = paralel.replace("Рим", "Рым");
             paralel = paralel.replace("1 Кор", "1 Кар");
             paralel = paralel.replace("2 Кор", "2 Кар");
@@ -1580,7 +1638,7 @@ void CreateCalindar::sviatyia(int Year) {
             maranata[116] = "Пс 44-45; 1 Цар 23-25; Мк 15.1-20";
             maranata[117] = "Пс 46-47; 1 Цар 26-28; Мк 15.21-47";
             maranata[118] = "Пс 48-49; 1 Цар 29-31; Мк 16";
-            maranata[119] = "Пс 50-51; 2 Цар 1-3; Иуды";
+            maranata[119] = "Пс 50-51; 2 Цар 1-3; Иуды 1";
             maranata[120] = "Пс 52-53; 2 Цар 4-6; 1 Пет 1.1-21";
             maranata[121] = "Пс 54; 2 Цар 7-8; 1 Пет 1.22-2.25";
             maranata[122] = "Пс 55-56; 2 Цар 9-11; 1 Пет 3";
@@ -1729,7 +1787,7 @@ void CreateCalindar::sviatyia(int Year) {
             maranata[265] = "Пс 138; Ис 56-58; Кол 2.6-23";
             maranata[266] = "Пс 139-140; Ис 59-61; Кол 3.1-4.1";
             maranata[267] = "Пс 141-142; Ис 62-63; Кол 4.2-18";
-            maranata[268] = "Пс 143; Ис 64-65; Флм";
+            maranata[268] = "Пс 143; Ис 64-65; Флм 1";
             maranata[269] = "Пс 144-145; Ис 66; Евр 1";
             maranata[270] = "Пс 146-147; Иер 1-2; Евр 2";
             maranata[271] = "Пс 148; Иер 3-4; Евр 3";
@@ -1795,7 +1853,7 @@ void CreateCalindar::sviatyia(int Year) {
             maranata[331] = "Пс 99-100; Иоил 1-3; Ин 18.28-19.16";
             maranata[332] = "Пс 101; Ам 1-4; Ин 19.17-42";
             maranata[333] = "Пс 102; Ам 5-9; Ин 20.1-18";
-            maranata[334] = "Пс 103; Авд; Ин 20.19-31";
+            maranata[334] = "Пс 103; Авд 1; Ин 20.19-31";
             maranata[335] = "Пс 104; Иона 1-4; Ин 21";
             maranata[336] = "Пс 105; Мих 1-3; 1 Ин 1.1-2.14";
             maranata[337] = "Пс 106; Мих 4-5; 1 Ин 2.15-3.10";
@@ -1902,52 +1960,52 @@ void CreateCalindar::sviatyia(int Year) {
             int postVialikiKM = calendar.addDays(-1).month();
             int postVialikaiPiatKD = calendar.addDays(-1 + -1).day();
             int postVialikaiPiatKM = calendar.addDays(-1 + -1).month();
-            data.append("<!DOCTYPE HTML><font color=\"#d00505\"><strong>ЕЎХАРЫСТЫЧНЫ ПОСТ ПЕРАД СЬВЯТЫМ ПРЫЧАСЬЦЕМ</strong></font>\n");
-            data.append("<em>Ня менш за 1 гадзiну перад пачаткам Боскай Літургіі трэба ўстрымацца ад ежы i напояў.</em>\n");
-            data.append("Чыстая вада, а таксама прыём прыпісаных лекаў не забараняецца.\n");
-            data.append("<font color=\"#d00505\"><strong>АДЗНАЧЭНЬНЕ СЬВЯТАЎ</strong></font>\n");
-            data.append("Згодна з кан. 880 Кодэксу Канонаў Усходніх Цэркваў вернікі Беларускай Грэка-Каталіцкай Царквы абавязаны сьвяткаваць, акрамя <strong>кожнай нядзелі</strong>, наступныя царкоўныя сьвяты:\n");
-            data.append("<strong>1.</strong> <em>Сьвяты, якія заўсёды ў нядзелю:</em>\n");
-            data.append("<strong>- Уваход Гасподні ў Ерусалім (Вербніца) ").append(QString::number(erusalimD)).append(" ").append(monthName[erusalimM]).append(";</strong>\n");
-            data.append("<strong>- Уваскрасеньне Хрыстова (Вялiкдзень) ").append(QString::number(pashaD)).append(" ").append(monthName[pashaM]).append(";</strong>\n");
-            data.append("<strong>- Зыход Сьвятога Духа (Тройца) – ").append(QString::number(troicaD)).append(" ").append(monthName[troicaM]).append(";</strong>\n");
-            data.append("<strong>2. Богазьяўленьне (Вадохрышча) – 6 студзеня;</strong>\n");
-            data.append("<strong>3. Дабравешчаньне Найсьвяцейшай Багародзiцы – 25 сакавіка;</strong>\n");
-            data.append("<strong>4. Узьнясеньне Гасподняе (Ушэсьце) – ").append(QString::number(uznasenneD)).append(" ").append(monthName[uznasenneM]).append(";</strong>\n");
-            data.append("<strong>5. Сьвята Вярхоўных Апосталаў Пятра і Паўла – 29 чэрвеня;</strong>\n");
-            data.append("<strong>6. Усьпеньне Найсьвяцейшай Багародзiцы – 15 жніўня;</strong>\n");
-            data.append("<strong>7. Нараджэньне Хрыстова (Раство) – 25 сьнежня.</strong>\n");
-            data.append("У гэтыя царкоўныя сьвяты і ў нядзелі вернiкi <strong>абавязаны браць удзел у сьв. Лiтургii</strong> i ўстрымлівацца ад цяжкай фiзiчнай працы.\n");
-            data.append("Ва ўсе iншыя сьвяты сьвятары адпраўляюць сьв. Лiтургiю для тых, якiя змогуць i пажадаюць сьвяткаваць. Аднак Царква таксама асабліва заахвочвае вернікаў браць удзел у набажэнствах наступных сьвятаў:\n<strong>• Абрэзаньне Гасподняе</strong>, <em>1 студзеня</em>;\n<strong>• Перамяненьне Гасподняе</strong>, <em>6 жніўня</em>;\n<strong>• Нараджэньне Найсьвяцейшай Багародзіцы</strong>, <em>8 верасьня</em>;\n<strong>• Узвышэньне Пачэснага Крыжа Гасподняга (Крыжаўзвышэньне)</strong>, <em>14 верасьня</em>.\n");
-            data.append("<font color=\"#d00505\"><strong>АБАВЯЗКОВЫЯ ПАСТЫ</strong></font>\n");
-            data.append("• <em><strong>Усе пятнiцы</strong> на працягу году вернікі БГКЦ абавязаны ўстрымлiвацца ад мясных страваў.\n");
-            data.append("Посту ў пятніцу няма ў сьвяты Гасподнiя i Багародзiчныя, а таксама ў перыяд:</em>\n");
-            data.append("- ад Раства (25 сьнежня) да Богазьяўленьня (6 студзеня);\n");
-            data.append("- ад Нядзелi мытнiка i фарысея (").append(QString::number(postMytnikND)).append(" ").append(monthName[postMytnikNM]).append(") да Нядзелi блуднага сына (").append(QString::number(postMytnikKD)).append(" ").append(monthName[postMytnikKM]).append(");\n");
-            data.append("- ад Вялiкадня (").append(QString::number(pashaD)).append(" ").append(monthName[pashaM]).append(") да Нядзелi Тамаша (").append(QString::number(nopostSvetluKD)).append(" ").append(monthName[nopostSvetluKM]).append(");\n");
-            data.append("- ад Тройцы (").append(QString::number(nopostTroicaND)).append(" ").append(monthName[nopostTroicaNM]).append(") да Нядзелi ўсiх сьвятых (").append(QString::number(nopostTroicaKD)).append(" ").append(monthName[nopostTroicaKM]).append(").\n");
-            data.append("<em>• Асаблівы час, калі вернікі прыкладаюць узмоцненыя намаганьні для свайго духоўнага росту, абмяжоўваюць сябе ў ежы, а таксама ўстрымліваюцца ад арганiзацыi публiчных забаў з музыкай i танцамi:</em>\n");
-            data.append("<strong>- Вялiкi пост і Вялікі тыдзень:</strong><em> ").append(QString::number(postVialikiND)).append(" ").append(monthName[postVialikiNM]).append(" – ").append(QString::number(postVialikiKD)).append(" ").append(monthName[postVialikiKM]).append(";</em>\n");
-            data.append("<strong>- Пятроўскі пост:</strong><em> ").append(QString::number(postPetrKD)).append(" ").append(monthName[postPetrKM]).append(" - 28 чэрвеня;</em>\n");
-            data.append("<strong>- Усьпенскі пост:</strong><em> 1 жніўня - 14 жніўня;</em>\n");
-            data.append("<strong>- Калядны пост (Пiлiпаўка):</strong><em> 15 лістапада – 24 сьнежня.</em>\n");
-            data.append("<strong>Грэка-католiкi абавязаны:</strong>\n");
-            data.append("• <em>Устрымлiвацца ад мясных i малочных страваў:</em>\n");
-            data.append("- у першы дзень Вялiкага посту (").append(QString::number(postVialikiND)).append(" ").append(monthName[postVialikiNM]).append(");\n");
-            data.append("- у Вялiкую пятнiцу (").append(QString::number(postVialikaiPiatKD)).append(" ").append(monthName[postVialikaiPiatKM]).append(");\n");
-            data.append("• <em>Устрымлiвацца ад мясных страваў i абмяжоўвацца адным пасілкам у дзень:</em>\n");
-            data.append("- у Сьвяты вечар перад Раством (24 сьнежня);\n");
-            data.append("- у Сьвяты вечар перад Богазьяўленьнем (5 студзеня);\n");
-            data.append("- на Ўзвышэньне сьв. Крыжа (14 верасьня);\n");
-            data.append("- на Адсячэньне галавы сьв. Яна Хрысьцiцеля (29 жніўня).\n");
-            data.append("<font color=\"#d00505\"><strong>АД ПОСТУ ЗВОЛЬНЕНЫЯ:</strong></font>\n");
-            data.append("- дзецi да 14 гадоў i тыя, чый узрост больш за 60 гадоў;\n");
-            data.append("- хворыя фiзiчна i душэўна, цяжарныя жанчыны, а таксама тыя, што кормяць грудзьмi;\n");
-            data.append("- тыя, што выздараўлiваюць пасьля цяжкай хваробы;\n");
-            data.append("- тыя, што не распараджаюцца сабой у поўнай меры (напрыклад, тыя, што жывуць у чужых; зьнябожаныя; тыя, што жывуць з ахвяраваньня i г. д.)\n");
+            data.append("<!DOCTYPE HTML><font color=\"#d00505\"><strong>ЕЎХАРЫСТЫЧНЫ ПОСТ ПЕРАД СЬВЯТЫМ ПРЫЧАСЬЦЕМ</strong></font><br><br>\n");
+            data.append("<em>Ня менш за 1 гадзiну перад пачаткам Боскай Літургіі трэба ўстрымацца ад ежы i напояў.</em><br><br>\n");
+            data.append("Чыстая вада, а таксама прыём прыпісаных лекаў не забараняецца.<br><br><br>\n");
+            data.append("<font color=\"#d00505\"><strong>АДЗНАЧЭНЬНЕ СЬВЯТАЎ</strong></font><br><br>\n");
+            data.append("Згодна з кан. 880 Кодэксу Канонаў Усходніх Цэркваў вернікі Беларускай Грэка-Каталіцкай Царквы абавязаны сьвяткаваць, акрамя <strong>кожнай нядзелі</strong>, наступныя царкоўныя сьвяты:<br><br>\n");
+            data.append("<strong>1.</strong> <em>Сьвяты, якія заўсёды ў нядзелю:</em><br>\n");
+            data.append("<strong>• Уваход Гасподні ў Ерусалім (Вербніца) ").append(QString::number(erusalimD)).append(" ").append(monthName[erusalimM]).append(";</strong><br>\n");
+            data.append("<strong>• Уваскрасеньне Хрыстова (Вялiкдзень) ").append(QString::number(pashaD)).append(" ").append(monthName[pashaM]).append(";</strong><br>\n");
+            data.append("<strong>• Зыход Сьвятога Духа (Тройца) – ").append(QString::number(troicaD)).append(" ").append(monthName[troicaM]).append(";</strong><br><br>\n");
+            data.append("<strong>2. Богазьяўленьне (Вадохрышча) – 6 студзеня;</strong><br>\n");
+            data.append("<strong>3. Дабравешчаньне Найсьвяцейшай Багародзiцы – 25 сакавіка;</strong><br>\n");
+            data.append("<strong>4. Узьнясеньне Гасподняе (Ушэсьце) – ").append(QString::number(uznasenneD)).append(" ").append(monthName[uznasenneM]).append(";</strong><br>\n");
+            data.append("<strong>5. Сьвята Вярхоўных апосталаў Пятра і Паўла – 29 чэрвеня;</strong><br>\n");
+            data.append("<strong>6. Усьпеньне Найсьвяцейшай Багародзiцы – 15 жніўня;</strong><br>\n");
+            data.append("<strong>7. Нараджэньне Хрыстова (Раство) – 25 сьнежня.</strong><br><br>\n");
+            data.append("У гэтыя царкоўныя сьвяты і ва ўсе нядзелі вернiкi <strong>абавязаныя браць удзел у сьв. Лiтургii</strong> i ўстрымлівацца ад цяжкай фiзiчнай працы.<br><br>\n");
+            data.append("Ва ўсе iншыя сьвяты сьвятары адпраўляюць сьв. Лiтургiю для тых вернікаў, якiя змогуць i пажадаюць сьвяткаваць.<br><br>\nАднак Царква таксама асабліва заахвочвае вернікаў браць удзел у набажэнствах наступных сьвятаў:<br><br>\n<strong>• Абрэзаньне Гасподняе</strong>, <em>1 студзеня</em>;<br>\n<strong>• Перамяненьне Гасподняе</strong>, <em>6 жніўня</em>;<br>\n<strong>• Нараджэньне Найсьвяцейшай Багародзіцы</strong>, <em>8 верасьня</em>;<br>\n<strong>• Узвышэньне Пачэснага Крыжа Гасподняга (Крыжаўзвышэньне)</strong>, <em>14 верасьня</em>.<br><br><br>\n");
+            data.append("<font color=\"#d00505\"><strong>АБАВЯЗКОВЫЯ ПАСТЫ</strong></font><br><br>\n");
+            data.append("• <em><strong>Усе пятнiцы</strong> на працягу году вернікі БГКЦ абавязаны ўстрымлiвацца ад мясных страваў.<br><br>\n");
+            data.append("Посту ў пятніцу няма ў сьвяты Гасподнiя i Багародзiчныя, а таксама ў перыяд:</em><br>\n");
+            data.append("- ад Раства <em>(25 сьнежня)</em> да Богазьяўленьня <em>(6 студзеня)</em>;<br>\n");
+            data.append("- ад Нядзелi мытнiка i фарысея <em>(").append(QString::number(postMytnikND)).append(" ").append(monthName[postMytnikNM]).append(")</em> да Нядзелi блуднага сына <em>(").append(QString::number(postMytnikKD)).append(" ").append(monthName[postMytnikKM]).append(")</em>;<br>\n");
+            data.append("- ад Вялiкадня <em>(").append(QString::number(pashaD)).append(" ").append(monthName[pashaM]).append(")</em> да Нядзелi Тамаша <em>(").append(QString::number(nopostSvetluKD)).append(" ").append(monthName[nopostSvetluKM]).append(")</em>;<br>\n");
+            data.append("- ад Тройцы <em>(").append(QString::number(nopostTroicaND)).append(" ").append(monthName[nopostTroicaNM]).append(")</em> да Нядзелi ўсiх сьвятых <em>(").append(QString::number(nopostTroicaKD)).append(" ").append(monthName[nopostTroicaKM]).append(")</em>.<br><br>\n");
+            data.append("<em>• Асаблівы час, калі вернікі прыкладаюць <strong>узмоцненыя намаганьні</strong> для свайго духоўнага росту, абмяжоўваюць сябе ў ежы, а таксама ўстрымліваюцца ад арганiзацыi публiчных забаў з музыкай i танцамi:</em><br>\n");
+            data.append("<strong>- Вялiкi пост і Вялікі тыдзень:</strong><em> ").append(QString::number(postVialikiND)).append(" ").append(monthName[postVialikiNM]).append(" – ").append(QString::number(postVialikiKD)).append(" ").append(monthName[postVialikiKM]).append(";</em><br>\n");
+            data.append("<strong>- Пятроўскі пост:</strong><em> ").append(QString::number(postPetrKD)).append(" ").append(monthName[postPetrKM]).append(" - 28 чэрвеня;</em><br>\n");
+            data.append("<strong>- Усьпенскі пост:</strong><em> 1 жніўня - 14 жніўня;</em><br>\n");
+            data.append("<strong>- Калядны пост (Пiлiпаўка):</strong><em> 15 лістапада – 24 сьнежня.</em><br><br>\n");
+            data.append("<strong>Грэка-католiкi абавязаны:</strong><br><br>\n");
+            data.append("• <em>Устрымлiвацца ад мясных i малочных страваў:</em><br>\n");
+            data.append("- у першы дзень Вялiкага посту <em>(").append(QString::number(postVialikiND)).append(" ").append(monthName[postVialikiNM]).append(")</em>;<br>\n");
+            data.append("- у Вялiкую пятнiцу <em>(").append(QString::number(postVialikaiPiatKD)).append(" ").append(monthName[postVialikaiPiatKM]).append(")</em>;<br><br>\n");
+            data.append("• <em>Устрымлiвацца ад мясных страваў i абмяжоўвацца адным пасілкам у дзень:</em><br>\n");
+            data.append("- у Сьвяты вечар перад Раством <em>(24 сьнежня)</em>;<br>\n");
+            data.append("- у Сьвяты вечар перад Богазьяўленьнем <em>(5 студзеня)</em>;<br>\n");
+            data.append("- на Ўзвышэньне сьв. Крыжа <em>(14 верасьня)</em>;<br>\n");
+            data.append("- на Адсячэньне галавы сьв. Яна Хрысьцiцеля <em>(29 жніўня)</em>.<br><br><br>\n");
+            data.append("<font color=\"#d00505\"><strong>АД ПОСТУ ЗВОЛЬНЕНЫЯ:</strong></font><br><br>\n");
+            data.append("- дзецi да 14 гадоў i тыя, чый узрост больш за 60 гадоў;<br>\n");
+            data.append("- хворыя фiзiчна i душэўна, цяжарныя жанчыны, а таксама тыя, што кормяць грудзьмi;<br>\n");
+            data.append("- тыя, што выздараўлiваюць пасьля цяжкай хваробы;<br>\n");
+            data.append("- тыя, што не распараджаюцца сабой у поўнай меры (напрыклад, тыя, што жывуць у чужых; зьнябожаныя; тыя, што жывуць з ахвяраваньня i г. д.)<br><br>\n");
             data.append("Таксама бiскуп i парахi могуць звольнiць верніка ад посту дзеля нейкiх важкiх прычынаў. Спаведнiк можа гэта зрабiць у спавядальнi.");
 
-            QString saveFileName = malitounikPatch + "/malitounik-bgkc/src/main/res/raw/pamiatka.html";
+            QString saveFileName = malitounikPatch + "/malitounik-bgkc/src/main/assets/pamiatka.html";
             QFileInfo fileInfo(saveFileName);   // С помощью QFileInfo
             QDir::setCurrent(fileInfo.path());  // установим текущую рабочую директорию, где будет файл, иначе может не заработать
             QFile file(saveFileName);
